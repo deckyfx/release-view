@@ -186,8 +186,8 @@
                 url: 'add.php',
                 data: $('#build-form').serialize(),
                 success: function(data, textStatus, jqXHR){
-                    //$('#add-build-modal').modal('toggle');
-                    //location.reload();
+                    $('#add-build-modal').modal('toggle');
+                    location.reload();
                 }
             });
         });        
