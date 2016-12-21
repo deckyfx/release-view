@@ -1,0 +1,23 @@
+{
+  "name": "release-view",
+  "homepage": "https://github.com/deckyfx/release-view",
+  "authors": [
+    "Decky Fiyemonda <deckyfx.fx@gmail.com>"
+  ],
+  "description": "Release View",
+  "main": "",
+  "license": "Apache2",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "moment": "^2.17.1",
+    "normalize-css": "^5.0.0",
+    "bootstrap-fileinput": "^4.3.6"
+  }
+}

@@ -1,0 +1,25 @@
+{
+    "propel": {
+        "database": {
+            "connections": {
+                "default": {
+                    "adapter": "mysql",
+                    "dsn": "mysql:host=localhost;port=3306;dbname=release-view",
+                    "user": "release-view",
+                    "password": "release-view",
+                    "settings": {
+                        "charset": "utf8"
+                    }
+                }
+            }
+        },
+        "runtime": {
+            "defaultConnection": "default",
+            "connections": ["default"]
+        },
+        "generator": {
+            "defaultConnection": "default",
+            "connections": ["default"]
+        }
+    }
+}

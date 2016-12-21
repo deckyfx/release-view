@@ -1,0 +1,6 @@
+./vendor/bin/propel diff
+./vendor/bin/propel migrate
+./vendor/bin/propel sql:build --overwrite
+./vendor/bin/propel model:build
+./vendor/bin/propel sql:insert
+composer dump-autoload

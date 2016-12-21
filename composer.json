@@ -1,0 +1,29 @@
+{
+    "name": "decky/release-view",
+    "description": "Release View",
+    "type": "project",
+    "license": "Apache2",
+    "authors": [
+        {
+            "name": "Decky Fiyemonda",
+            "email": "yggdra@ymail.com"
+        }
+    ],
+    "require": {
+        "mightydes/enjoin": "^1.1",
+        "propel/propel": "^2.0@alpha",
+        "codeguy/upload": "^1.3",
+        "hassankhan/config": "^0.10.0",
+        "caouecs/laravel-lang": "^3.0",
+        "fightbulc/moment": "^1.25"
+    },
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "Models\\": [
+                "app/Models"
+            ]
+        },
+        "classmap": ["schema/Models/"]
+    }
+}
