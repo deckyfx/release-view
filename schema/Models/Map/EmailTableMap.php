@@ -2,8 +2,8 @@
 
 namespace Models\Map;
 
-use Models\Config;
-use Models\ConfigQuery;
+use Models\Email;
+use Models\EmailQuery;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\InstancePoolTrait;
@@ -16,7 +16,7 @@ use Propel\Runtime\Map\TableMapTrait;
 
 
 /**
- * This class defines the structure of the 'configs' table.
+ * This class defines the structure of the 'emails' table.
  *
  *
  *
@@ -26,7 +26,7 @@ use Propel\Runtime\Map\TableMapTrait;
  * (i.e. if it's a text column type).
  *
  */
-class ConfigTableMap extends TableMap
+class EmailTableMap extends TableMap
 {
     use InstancePoolTrait;
     use TableMapTrait;
@@ -34,7 +34,7 @@ class ConfigTableMap extends TableMap
     /**
      * The (dot-path) name of this class
      */
-    const CLASS_NAME = 'Models.Map.ConfigTableMap';
+    const CLASS_NAME = 'Models.Map.EmailTableMap';
 
     /**
      * The default database name for this class
@@ -44,22 +44,22 @@ class ConfigTableMap extends TableMap
     /**
      * The table name for this class
      */
-    const TABLE_NAME = 'configs';
+    const TABLE_NAME = 'emails';
 
     /**
      * The related Propel class for this table
      */
-    const OM_CLASS = '\\Models\\Config';
+    const OM_CLASS = '\\Models\\Email';
 
     /**
      * A class that can be returned by this tableMap
      */
-    const CLASS_DEFAULT = 'Models.Config';
+    const CLASS_DEFAULT = 'Models.Email';
 
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 7;
+    const NUM_COLUMNS = 4;
 
     /**
      * The number of lazy-loaded columns
@@ -69,42 +69,27 @@ class ConfigTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 7;
+    const NUM_HYDRATE_COLUMNS = 4;
 
     /**
      * the column name for the id field
      */
-    const COL_ID = 'configs.id';
+    const COL_ID = 'emails.id';
 
     /**
-     * the column name for the key field
+     * the column name for the email field
      */
-    const COL_KEY = 'configs.key';
-
-    /**
-     * the column name for the value field
-     */
-    const COL_VALUE = 'configs.value';
-
-    /**
-     * the column name for the type field
-     */
-    const COL_TYPE = 'configs.type';
-
-    /**
-     * the column name for the enable field
-     */
-    const COL_ENABLE = 'configs.enable';
+    const COL_EMAIL = 'emails.email';
 
     /**
      * the column name for the created_at field
      */
-    const COL_CREATED_AT = 'configs.created_at';
+    const COL_CREATED_AT = 'emails.created_at';
 
     /**
      * the column name for the updated_at field
      */
-    const COL_UPDATED_AT = 'configs.updated_at';
+    const COL_UPDATED_AT = 'emails.updated_at';
 
     /**
      * The default string format for model objects of the related table
@@ -118,11 +103,11 @@ class ConfigTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('Id', 'Key', 'Value', 'Type', 'Enable', 'CreatedAt', 'UpdatedAt', ),
-        self::TYPE_CAMELNAME     => array('id', 'key', 'value', 'type', 'enable', 'createdAt', 'updatedAt', ),
-        self::TYPE_COLNAME       => array(ConfigTableMap::COL_ID, ConfigTableMap::COL_KEY, ConfigTableMap::COL_VALUE, ConfigTableMap::COL_TYPE, ConfigTableMap::COL_ENABLE, ConfigTableMap::COL_CREATED_AT, ConfigTableMap::COL_UPDATED_AT, ),
-        self::TYPE_FIELDNAME     => array('id', 'key', 'value', 'type', 'enable', 'created_at', 'updated_at', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, )
+        self::TYPE_PHPNAME       => array('Id', 'Email', 'CreatedAt', 'UpdatedAt', ),
+        self::TYPE_CAMELNAME     => array('id', 'email', 'createdAt', 'updatedAt', ),
+        self::TYPE_COLNAME       => array(EmailTableMap::COL_ID, EmailTableMap::COL_EMAIL, EmailTableMap::COL_CREATED_AT, EmailTableMap::COL_UPDATED_AT, ),
+        self::TYPE_FIELDNAME     => array('id', 'email', 'created_at', 'updated_at', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, )
     );
 
     /**
@@ -132,11 +117,11 @@ class ConfigTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('Id' => 0, 'Key' => 1, 'Value' => 2, 'Type' => 3, 'Enable' => 4, 'CreatedAt' => 5, 'UpdatedAt' => 6, ),
-        self::TYPE_CAMELNAME     => array('id' => 0, 'key' => 1, 'value' => 2, 'type' => 3, 'enable' => 4, 'createdAt' => 5, 'updatedAt' => 6, ),
-        self::TYPE_COLNAME       => array(ConfigTableMap::COL_ID => 0, ConfigTableMap::COL_KEY => 1, ConfigTableMap::COL_VALUE => 2, ConfigTableMap::COL_TYPE => 3, ConfigTableMap::COL_ENABLE => 4, ConfigTableMap::COL_CREATED_AT => 5, ConfigTableMap::COL_UPDATED_AT => 6, ),
-        self::TYPE_FIELDNAME     => array('id' => 0, 'key' => 1, 'value' => 2, 'type' => 3, 'enable' => 4, 'created_at' => 5, 'updated_at' => 6, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, )
+        self::TYPE_PHPNAME       => array('Id' => 0, 'Email' => 1, 'CreatedAt' => 2, 'UpdatedAt' => 3, ),
+        self::TYPE_CAMELNAME     => array('id' => 0, 'email' => 1, 'createdAt' => 2, 'updatedAt' => 3, ),
+        self::TYPE_COLNAME       => array(EmailTableMap::COL_ID => 0, EmailTableMap::COL_EMAIL => 1, EmailTableMap::COL_CREATED_AT => 2, EmailTableMap::COL_UPDATED_AT => 3, ),
+        self::TYPE_FIELDNAME     => array('id' => 0, 'email' => 1, 'created_at' => 2, 'updated_at' => 3, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, )
     );
 
     /**
@@ -149,18 +134,15 @@ class ConfigTableMap extends TableMap
     public function initialize()
     {
         // attributes
-        $this->setName('configs');
-        $this->setPhpName('Config');
+        $this->setName('emails');
+        $this->setPhpName('Email');
         $this->setIdentifierQuoting(false);
-        $this->setClassName('\\Models\\Config');
+        $this->setClassName('\\Models\\Email');
         $this->setPackage('Models');
         $this->setUseIdGenerator(true);
         // columns
         $this->addPrimaryKey('id', 'Id', 'INTEGER', true, null, null);
-        $this->addColumn('key', 'Key', 'VARCHAR', false, 255, '');
-        $this->addColumn('value', 'Value', 'LONGVARCHAR', false, null, null);
-        $this->addColumn('type', 'Type', 'CHAR', false, null, null);
-        $this->addColumn('enable', 'Enable', 'BOOLEAN', false, 1, null);
+        $this->addColumn('email', 'Email', 'VARCHAR', false, 255, '');
         $this->addColumn('created_at', 'CreatedAt', 'TIMESTAMP', false, null, null);
         $this->addColumn('updated_at', 'UpdatedAt', 'TIMESTAMP', false, null, null);
     } // initialize()
@@ -242,7 +224,7 @@ class ConfigTableMap extends TableMap
      */
     public static function getOMClass($withPrefix = true)
     {
-        return $withPrefix ? ConfigTableMap::CLASS_DEFAULT : ConfigTableMap::OM_CLASS;
+        return $withPrefix ? EmailTableMap::CLASS_DEFAULT : EmailTableMap::OM_CLASS;
     }
 
     /**
@@ -256,22 +238,22 @@ class ConfigTableMap extends TableMap
      *
      * @throws PropelException Any exceptions caught during processing will be
      *                         rethrown wrapped into a PropelException.
-     * @return array           (Config object, last column rank)
+     * @return array           (Email object, last column rank)
      */
     public static function populateObject($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
-        $key = ConfigTableMap::getPrimaryKeyHashFromRow($row, $offset, $indexType);
-        if (null !== ($obj = ConfigTableMap::getInstanceFromPool($key))) {
+        $key = EmailTableMap::getPrimaryKeyHashFromRow($row, $offset, $indexType);
+        if (null !== ($obj = EmailTableMap::getInstanceFromPool($key))) {
             // We no longer rehydrate the object, since this can cause data loss.
             // See http://www.propelorm.org/ticket/509
             // $obj->hydrate($row, $offset, true); // rehydrate
-            $col = $offset + ConfigTableMap::NUM_HYDRATE_COLUMNS;
+            $col = $offset + EmailTableMap::NUM_HYDRATE_COLUMNS;
         } else {
-            $cls = ConfigTableMap::OM_CLASS;
-            /** @var Config $obj */
+            $cls = EmailTableMap::OM_CLASS;
+            /** @var Email $obj */
             $obj = new $cls();
             $col = $obj->hydrate($row, $offset, false, $indexType);
-            ConfigTableMap::addInstanceToPool($obj, $key);
+            EmailTableMap::addInstanceToPool($obj, $key);
         }
 
         return array($obj, $col);
@@ -294,18 +276,18 @@ class ConfigTableMap extends TableMap
         $cls = static::getOMClass(false);
         // populate the object(s)
         while ($row = $dataFetcher->fetch()) {
-            $key = ConfigTableMap::getPrimaryKeyHashFromRow($row, 0, $dataFetcher->getIndexType());
-            if (null !== ($obj = ConfigTableMap::getInstanceFromPool($key))) {
+            $key = EmailTableMap::getPrimaryKeyHashFromRow($row, 0, $dataFetcher->getIndexType());
+            if (null !== ($obj = EmailTableMap::getInstanceFromPool($key))) {
                 // We no longer rehydrate the object, since this can cause data loss.
                 // See http://www.propelorm.org/ticket/509
                 // $obj->hydrate($row, 0, true); // rehydrate
                 $results[] = $obj;
             } else {
-                /** @var Config $obj */
+                /** @var Email $obj */
                 $obj = new $cls();
                 $obj->hydrate($row);
                 $results[] = $obj;
-                ConfigTableMap::addInstanceToPool($obj, $key);
+                EmailTableMap::addInstanceToPool($obj, $key);
             } // if key exists
         }
 
@@ -326,19 +308,13 @@ class ConfigTableMap extends TableMap
     public static function addSelectColumns(Criteria $criteria, $alias = null)
     {
         if (null === $alias) {
-            $criteria->addSelectColumn(ConfigTableMap::COL_ID);
-            $criteria->addSelectColumn(ConfigTableMap::COL_KEY);
-            $criteria->addSelectColumn(ConfigTableMap::COL_VALUE);
-            $criteria->addSelectColumn(ConfigTableMap::COL_TYPE);
-            $criteria->addSelectColumn(ConfigTableMap::COL_ENABLE);
-            $criteria->addSelectColumn(ConfigTableMap::COL_CREATED_AT);
-            $criteria->addSelectColumn(ConfigTableMap::COL_UPDATED_AT);
+            $criteria->addSelectColumn(EmailTableMap::COL_ID);
+            $criteria->addSelectColumn(EmailTableMap::COL_EMAIL);
+            $criteria->addSelectColumn(EmailTableMap::COL_CREATED_AT);
+            $criteria->addSelectColumn(EmailTableMap::COL_UPDATED_AT);
         } else {
             $criteria->addSelectColumn($alias . '.id');
-            $criteria->addSelectColumn($alias . '.key');
-            $criteria->addSelectColumn($alias . '.value');
-            $criteria->addSelectColumn($alias . '.type');
-            $criteria->addSelectColumn($alias . '.enable');
+            $criteria->addSelectColumn($alias . '.email');
             $criteria->addSelectColumn($alias . '.created_at');
             $criteria->addSelectColumn($alias . '.updated_at');
         }
@@ -353,7 +329,7 @@ class ConfigTableMap extends TableMap
      */
     public static function getTableMap()
     {
-        return Propel::getServiceContainer()->getDatabaseMap(ConfigTableMap::DATABASE_NAME)->getTable(ConfigTableMap::TABLE_NAME);
+        return Propel::getServiceContainer()->getDatabaseMap(EmailTableMap::DATABASE_NAME)->getTable(EmailTableMap::TABLE_NAME);
     }
 
     /**
@@ -361,16 +337,16 @@ class ConfigTableMap extends TableMap
      */
     public static function buildTableMap()
     {
-        $dbMap = Propel::getServiceContainer()->getDatabaseMap(ConfigTableMap::DATABASE_NAME);
-        if (!$dbMap->hasTable(ConfigTableMap::TABLE_NAME)) {
-            $dbMap->addTableObject(new ConfigTableMap());
+        $dbMap = Propel::getServiceContainer()->getDatabaseMap(EmailTableMap::DATABASE_NAME);
+        if (!$dbMap->hasTable(EmailTableMap::TABLE_NAME)) {
+            $dbMap->addTableObject(new EmailTableMap());
         }
     }
 
     /**
-     * Performs a DELETE on the database, given a Config or Criteria object OR a primary key value.
+     * Performs a DELETE on the database, given a Email or Criteria object OR a primary key value.
      *
-     * @param mixed               $values Criteria or Config object or primary key or array of primary keys
+     * @param mixed               $values Criteria or Email object or primary key or array of primary keys
      *              which is used to create the DELETE statement
      * @param  ConnectionInterface $con the connection to use
      * @return int             The number of affected rows (if supported by underlying database driver).  This includes CASCADE-related rows
@@ -381,27 +357,27 @@ class ConfigTableMap extends TableMap
      public static function doDelete($values, ConnectionInterface $con = null)
      {
         if (null === $con) {
-            $con = Propel::getServiceContainer()->getWriteConnection(ConfigTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(EmailTableMap::DATABASE_NAME);
         }
 
         if ($values instanceof Criteria) {
             // rename for clarity
             $criteria = $values;
-        } elseif ($values instanceof \Models\Config) { // it's a model object
+        } elseif ($values instanceof \Models\Email) { // it's a model object
             // create criteria based on pk values
             $criteria = $values->buildPkeyCriteria();
         } else { // it's a primary key, or an array of pks
-            $criteria = new Criteria(ConfigTableMap::DATABASE_NAME);
-            $criteria->add(ConfigTableMap::COL_ID, (array) $values, Criteria::IN);
+            $criteria = new Criteria(EmailTableMap::DATABASE_NAME);
+            $criteria->add(EmailTableMap::COL_ID, (array) $values, Criteria::IN);
         }
 
-        $query = ConfigQuery::create()->mergeWith($criteria);
+        $query = EmailQuery::create()->mergeWith($criteria);
 
         if ($values instanceof Criteria) {
-            ConfigTableMap::clearInstancePool();
+            EmailTableMap::clearInstancePool();
         } elseif (!is_object($values)) { // it's a primary key, or an array of pks
             foreach ((array) $values as $singleval) {
-                ConfigTableMap::removeInstanceFromPool($singleval);
+                EmailTableMap::removeInstanceFromPool($singleval);
             }
         }
 
@@ -409,20 +385,20 @@ class ConfigTableMap extends TableMap
     }
 
     /**
-     * Deletes all rows from the configs table.
+     * Deletes all rows from the emails table.
      *
      * @param ConnectionInterface $con the connection to use
      * @return int The number of affected rows (if supported by underlying database driver).
      */
     public static function doDeleteAll(ConnectionInterface $con = null)
     {
-        return ConfigQuery::create()->doDeleteAll($con);
+        return EmailQuery::create()->doDeleteAll($con);
     }
 
     /**
-     * Performs an INSERT on the database, given a Config or Criteria object.
+     * Performs an INSERT on the database, given a Email or Criteria object.
      *
-     * @param mixed               $criteria Criteria or Config object containing data that is used to create the INSERT statement.
+     * @param mixed               $criteria Criteria or Email object containing data that is used to create the INSERT statement.
      * @param ConnectionInterface $con the ConnectionInterface connection to use
      * @return mixed           The new primary key.
      * @throws PropelException Any exceptions caught during processing will be
@@ -431,22 +407,22 @@ class ConfigTableMap extends TableMap
     public static function doInsert($criteria, ConnectionInterface $con = null)
     {
         if (null === $con) {
-            $con = Propel::getServiceContainer()->getWriteConnection(ConfigTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(EmailTableMap::DATABASE_NAME);
         }
 
         if ($criteria instanceof Criteria) {
             $criteria = clone $criteria; // rename for clarity
         } else {
-            $criteria = $criteria->buildCriteria(); // build Criteria from Config object
+            $criteria = $criteria->buildCriteria(); // build Criteria from Email object
         }
 
-        if ($criteria->containsKey(ConfigTableMap::COL_ID) && $criteria->keyContainsValue(ConfigTableMap::COL_ID) ) {
-            throw new PropelException('Cannot insert a value for auto-increment primary key ('.ConfigTableMap::COL_ID.')');
+        if ($criteria->containsKey(EmailTableMap::COL_ID) && $criteria->keyContainsValue(EmailTableMap::COL_ID) ) {
+            throw new PropelException('Cannot insert a value for auto-increment primary key ('.EmailTableMap::COL_ID.')');
         }
 
 
         // Set the correct dbName
-        $query = ConfigQuery::create()->mergeWith($criteria);
+        $query = EmailQuery::create()->mergeWith($criteria);
 
         // use transaction because $criteria could contain info
         // for more than one table (I guess, conceivably)
@@ -455,7 +431,7 @@ class ConfigTableMap extends TableMap
         });
     }
 
-} // ConfigTableMap
+} // EmailTableMap
 // This is the static code needed to register the TableMap for this table with the main Propel class.
 //
-ConfigTableMap::buildTableMap();
+EmailTableMap::buildTableMap();

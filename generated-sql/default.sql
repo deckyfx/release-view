@@ -15,6 +15,7 @@ CREATE TABLE `configs`
     `key` VARCHAR(255) DEFAULT '',
     `value` TEXT,
     `type` enum('string','int','double','boolean'),
+    `enable` TINYINT(1),
     `created_at` DATETIME,
     `updated_at` DATETIME,
     PRIMARY KEY (`id`)
@@ -33,6 +34,21 @@ CREATE TABLE `builds`
     `version` VARCHAR(255) DEFAULT '',
     `url` TEXT,
     `note` TEXT,
+    `created_at` DATETIME,
+    `updated_at` DATETIME,
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+
+-- ---------------------------------------------------------------------
+-- emails
+-- ---------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `emails`;
+
+CREATE TABLE `emails`
+(
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `email` VARCHAR(255) DEFAULT '',
     `created_at` DATETIME,
     `updated_at` DATETIME,
     PRIMARY KEY (`id`)

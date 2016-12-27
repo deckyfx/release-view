@@ -38,5 +38,6 @@ jspm_packages
 
 /vendor/
 /bower_components/
-
 /builds/
+/generated-conf/
+/generated-sql/

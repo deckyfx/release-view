@@ -5,9 +5,9 @@ namespace Models\Base;
 use \DateTime;
 use \Exception;
 use \PDO;
-use Models\Config as ChildConfig;
-use Models\ConfigQuery as ChildConfigQuery;
-use Models\Map\ConfigTableMap;
+use Models\Email as ChildEmail;
+use Models\EmailQuery as ChildEmailQuery;
+use Models\Map\EmailTableMap;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
@@ -22,18 +22,18 @@ use Propel\Runtime\Parser\AbstractParser;
 use Propel\Runtime\Util\PropelDateTime;
 
 /**
- * Base class that represents a row from the 'configs' table.
+ * Base class that represents a row from the 'emails' table.
  *
  *
  *
  * @package    propel.generator.Models.Base
  */
-abstract class Config implements ActiveRecordInterface
+abstract class Email implements ActiveRecordInterface
 {
     /**
      * TableMap class name
      */
-    const TABLE_MAP = '\\Models\\Map\\ConfigTableMap';
+    const TABLE_MAP = '\\Models\\Map\\EmailTableMap';
 
 
     /**
@@ -70,33 +70,12 @@ abstract class Config implements ActiveRecordInterface
     protected $id;
 
     /**
-     * The value for the key field.
+     * The value for the email field.
      *
      * Note: this column has a database default value of: ''
      * @var        string
      */
-    protected $key;
-
-    /**
-     * The value for the value field.
-     *
-     * @var        string
-     */
-    protected $value;
-
-    /**
-     * The value for the type field.
-     *
-     * @var        string
-     */
-    protected $type;
-
-    /**
-     * The value for the enable field.
-     *
-     * @var        boolean
-     */
-    protected $enable;
+    protected $email;
 
     /**
      * The value for the created_at field.
@@ -128,11 +107,11 @@ abstract class Config implements ActiveRecordInterface
      */
     public function applyDefaultValues()
     {
-        $this->key = '';
+        $this->email = '';
     }
 
     /**
-     * Initializes internal state of Models\Base\Config object.
+     * Initializes internal state of Models\Base\Email object.
      * @see applyDefaults()
      */
     public function __construct()
@@ -229,9 +208,9 @@ abstract class Config implements ActiveRecordInterface
     }
 
     /**
-     * Compares this with another <code>Config</code> instance.  If
-     * <code>obj</code> is an instance of <code>Config</code>, delegates to
-     * <code>equals(Config)</code>.  Otherwise, returns <code>false</code>.
+     * Compares this with another <code>Email</code> instance.  If
+     * <code>obj</code> is an instance of <code>Email</code>, delegates to
+     * <code>equals(Email)</code>.  Otherwise, returns <code>false</code>.
      *
      * @param  mixed   $obj The object to compare to.
      * @return boolean Whether equal to the object specified.
@@ -297,7 +276,7 @@ abstract class Config implements ActiveRecordInterface
      * @param string $name  The virtual column name
      * @param mixed  $value The value to give to the virtual column
      *
-     * @return $this|Config The current object, for fluid interface
+     * @return $this|Email The current object, for fluid interface
      */
     public function setVirtualColumn($name, $value)
     {
@@ -369,53 +348,13 @@ abstract class Config implements ActiveRecordInterface
     }
 
     /**
-     * Get the [key] column value.
+     * Get the [email] column value.
      *
      * @return string
      */
-    public function getKey()
+    public function getEmail()
     {
-        return $this->key;
-    }
-
-    /**
-     * Get the [value] column value.
-     *
-     * @return string
-     */
-    public function getValue()
-    {
-        return $this->value;
-    }
-
-    /**
-     * Get the [type] column value.
-     *
-     * @return string
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
-
-    /**
-     * Get the [enable] column value.
-     *
-     * @return boolean
-     */
-    public function getEnable()
-    {
-        return $this->enable;
-    }
-
-    /**
-     * Get the [enable] column value.
-     *
-     * @return boolean
-     */
-    public function isEnable()
-    {
-        return $this->getEnable();
+        return $this->email;
     }
 
     /**
@@ -462,7 +401,7 @@ abstract class Config implements ActiveRecordInterface
      * Set the value of [id] column.
      *
      * @param int $v new value
-     * @return $this|\Models\Config The current object (for fluent API support)
+     * @return $this|\Models\Email The current object (for fluent API support)
      */
     public function setId($v)
     {
@@ -472,106 +411,38 @@ abstract class Config implements ActiveRecordInterface
 
         if ($this->id !== $v) {
             $this->id = $v;
-            $this->modifiedColumns[ConfigTableMap::COL_ID] = true;
+            $this->modifiedColumns[EmailTableMap::COL_ID] = true;
         }
 
         return $this;
     } // setId()
 
     /**
-     * Set the value of [key] column.
+     * Set the value of [email] column.
      *
      * @param string $v new value
-     * @return $this|\Models\Config The current object (for fluent API support)
+     * @return $this|\Models\Email The current object (for fluent API support)
      */
-    public function setKey($v)
+    public function setEmail($v)
     {
         if ($v !== null) {
             $v = (string) $v;
         }
 
-        if ($this->key !== $v) {
-            $this->key = $v;
-            $this->modifiedColumns[ConfigTableMap::COL_KEY] = true;
+        if ($this->email !== $v) {
+            $this->email = $v;
+            $this->modifiedColumns[EmailTableMap::COL_EMAIL] = true;
         }
 
         return $this;
-    } // setKey()
-
-    /**
-     * Set the value of [value] column.
-     *
-     * @param string $v new value
-     * @return $this|\Models\Config The current object (for fluent API support)
-     */
-    public function setValue($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->value !== $v) {
-            $this->value = $v;
-            $this->modifiedColumns[ConfigTableMap::COL_VALUE] = true;
-        }
-
-        return $this;
-    } // setValue()
-
-    /**
-     * Set the value of [type] column.
-     *
-     * @param string $v new value
-     * @return $this|\Models\Config The current object (for fluent API support)
-     */
-    public function setType($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->type !== $v) {
-            $this->type = $v;
-            $this->modifiedColumns[ConfigTableMap::COL_TYPE] = true;
-        }
-
-        return $this;
-    } // setType()
-
-    /**
-     * Sets the value of the [enable] column.
-     * Non-boolean arguments are converted using the following rules:
-     *   * 1, '1', 'true',  'on',  and 'yes' are converted to boolean true
-     *   * 0, '0', 'false', 'off', and 'no'  are converted to boolean false
-     * Check on string values is case insensitive (so 'FaLsE' is seen as 'false').
-     *
-     * @param  boolean|integer|string $v The new value
-     * @return $this|\Models\Config The current object (for fluent API support)
-     */
-    public function setEnable($v)
-    {
-        if ($v !== null) {
-            if (is_string($v)) {
-                $v = in_array(strtolower($v), array('false', 'off', '-', 'no', 'n', '0', '')) ? false : true;
-            } else {
-                $v = (boolean) $v;
-            }
-        }
-
-        if ($this->enable !== $v) {
-            $this->enable = $v;
-            $this->modifiedColumns[ConfigTableMap::COL_ENABLE] = true;
-        }
-
-        return $this;
-    } // setEnable()
+    } // setEmail()
 
     /**
      * Sets the value of [created_at] column to a normalized version of the date/time value specified.
      *
      * @param  mixed $v string, integer (timestamp), or \DateTimeInterface value.
      *               Empty strings are treated as NULL.
-     * @return $this|\Models\Config The current object (for fluent API support)
+     * @return $this|\Models\Email The current object (for fluent API support)
      */
     public function setCreatedAt($v)
     {
@@ -579,7 +450,7 @@ abstract class Config implements ActiveRecordInterface
         if ($this->created_at !== null || $dt !== null) {
             if ($this->created_at === null || $dt === null || $dt->format("Y-m-d H:i:s.u") !== $this->created_at->format("Y-m-d H:i:s.u")) {
                 $this->created_at = $dt === null ? null : clone $dt;
-                $this->modifiedColumns[ConfigTableMap::COL_CREATED_AT] = true;
+                $this->modifiedColumns[EmailTableMap::COL_CREATED_AT] = true;
             }
         } // if either are not null
 
@@ -591,7 +462,7 @@ abstract class Config implements ActiveRecordInterface
      *
      * @param  mixed $v string, integer (timestamp), or \DateTimeInterface value.
      *               Empty strings are treated as NULL.
-     * @return $this|\Models\Config The current object (for fluent API support)
+     * @return $this|\Models\Email The current object (for fluent API support)
      */
     public function setUpdatedAt($v)
     {
@@ -599,7 +470,7 @@ abstract class Config implements ActiveRecordInterface
         if ($this->updated_at !== null || $dt !== null) {
             if ($this->updated_at === null || $dt === null || $dt->format("Y-m-d H:i:s.u") !== $this->updated_at->format("Y-m-d H:i:s.u")) {
                 $this->updated_at = $dt === null ? null : clone $dt;
-                $this->modifiedColumns[ConfigTableMap::COL_UPDATED_AT] = true;
+                $this->modifiedColumns[EmailTableMap::COL_UPDATED_AT] = true;
             }
         } // if either are not null
 
@@ -616,7 +487,7 @@ abstract class Config implements ActiveRecordInterface
      */
     public function hasOnlyDefaultValues()
     {
-            if ($this->key !== '') {
+            if ($this->email !== '') {
                 return false;
             }
 
@@ -646,28 +517,19 @@ abstract class Config implements ActiveRecordInterface
     {
         try {
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : ConfigTableMap::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : EmailTableMap::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)];
             $this->id = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : ConfigTableMap::translateFieldName('Key', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->key = (null !== $col) ? (string) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : EmailTableMap::translateFieldName('Email', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->email = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : ConfigTableMap::translateFieldName('Value', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->value = (null !== $col) ? (string) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : ConfigTableMap::translateFieldName('Type', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->type = (null !== $col) ? (string) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : ConfigTableMap::translateFieldName('Enable', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->enable = (null !== $col) ? (boolean) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : ConfigTableMap::translateFieldName('CreatedAt', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : EmailTableMap::translateFieldName('CreatedAt', TableMap::TYPE_PHPNAME, $indexType)];
             if ($col === '0000-00-00 00:00:00') {
                 $col = null;
             }
             $this->created_at = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : ConfigTableMap::translateFieldName('UpdatedAt', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : EmailTableMap::translateFieldName('UpdatedAt', TableMap::TYPE_PHPNAME, $indexType)];
             if ($col === '0000-00-00 00:00:00') {
                 $col = null;
             }
@@ -680,10 +542,10 @@ abstract class Config implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 7; // 7 = ConfigTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 4; // 4 = EmailTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
-            throw new PropelException(sprintf('Error populating %s object', '\\Models\\Config'), 0, $e);
+            throw new PropelException(sprintf('Error populating %s object', '\\Models\\Email'), 0, $e);
         }
     }
 
@@ -725,13 +587,13 @@ abstract class Config implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getReadConnection(ConfigTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getReadConnection(EmailTableMap::DATABASE_NAME);
         }
 
         // We don't need to alter the object instance pool; we're just modifying this instance
         // already in the pool.
 
-        $dataFetcher = ChildConfigQuery::create(null, $this->buildPkeyCriteria())->setFormatter(ModelCriteria::FORMAT_STATEMENT)->find($con);
+        $dataFetcher = ChildEmailQuery::create(null, $this->buildPkeyCriteria())->setFormatter(ModelCriteria::FORMAT_STATEMENT)->find($con);
         $row = $dataFetcher->fetch();
         $dataFetcher->close();
         if (!$row) {
@@ -750,8 +612,8 @@ abstract class Config implements ActiveRecordInterface
      * @param      ConnectionInterface $con
      * @return void
      * @throws PropelException
-     * @see Config::setDeleted()
-     * @see Config::isDeleted()
+     * @see Email::setDeleted()
+     * @see Email::isDeleted()
      */
     public function delete(ConnectionInterface $con = null)
     {
@@ -760,11 +622,11 @@ abstract class Config implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getWriteConnection(ConfigTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(EmailTableMap::DATABASE_NAME);
         }
 
         $con->transaction(function () use ($con) {
-            $deleteQuery = ChildConfigQuery::create()
+            $deleteQuery = ChildEmailQuery::create()
                 ->filterByPrimaryKey($this->getPrimaryKey());
             $ret = $this->preDelete($con);
             if ($ret) {
@@ -795,7 +657,7 @@ abstract class Config implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getWriteConnection(ConfigTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(EmailTableMap::DATABASE_NAME);
         }
 
         return $con->transaction(function () use ($con) {
@@ -805,16 +667,16 @@ abstract class Config implements ActiveRecordInterface
                 $ret = $ret && $this->preInsert($con);
                 // timestampable behavior
 
-                if (!$this->isColumnModified(ConfigTableMap::COL_CREATED_AT)) {
+                if (!$this->isColumnModified(EmailTableMap::COL_CREATED_AT)) {
                     $this->setCreatedAt(\Propel\Runtime\Util\PropelDateTime::createHighPrecision());
                 }
-                if (!$this->isColumnModified(ConfigTableMap::COL_UPDATED_AT)) {
+                if (!$this->isColumnModified(EmailTableMap::COL_UPDATED_AT)) {
                     $this->setUpdatedAt(\Propel\Runtime\Util\PropelDateTime::createHighPrecision());
                 }
             } else {
                 $ret = $ret && $this->preUpdate($con);
                 // timestampable behavior
-                if ($this->isModified() && !$this->isColumnModified(ConfigTableMap::COL_UPDATED_AT)) {
+                if ($this->isModified() && !$this->isColumnModified(EmailTableMap::COL_UPDATED_AT)) {
                     $this->setUpdatedAt(\Propel\Runtime\Util\PropelDateTime::createHighPrecision());
                 }
             }
@@ -826,7 +688,7 @@ abstract class Config implements ActiveRecordInterface
                     $this->postUpdate($con);
                 }
                 $this->postSave($con);
-                ConfigTableMap::addInstanceToPool($this);
+                EmailTableMap::addInstanceToPool($this);
             } else {
                 $affectedRows = 0;
             }
@@ -883,36 +745,27 @@ abstract class Config implements ActiveRecordInterface
         $modifiedColumns = array();
         $index = 0;
 
-        $this->modifiedColumns[ConfigTableMap::COL_ID] = true;
+        $this->modifiedColumns[EmailTableMap::COL_ID] = true;
         if (null !== $this->id) {
-            throw new PropelException('Cannot insert a value for auto-increment primary key (' . ConfigTableMap::COL_ID . ')');
+            throw new PropelException('Cannot insert a value for auto-increment primary key (' . EmailTableMap::COL_ID . ')');
         }
 
          // check the columns in natural order for more readable SQL queries
-        if ($this->isColumnModified(ConfigTableMap::COL_ID)) {
+        if ($this->isColumnModified(EmailTableMap::COL_ID)) {
             $modifiedColumns[':p' . $index++]  = 'id';
         }
-        if ($this->isColumnModified(ConfigTableMap::COL_KEY)) {
-            $modifiedColumns[':p' . $index++]  = 'key';
+        if ($this->isColumnModified(EmailTableMap::COL_EMAIL)) {
+            $modifiedColumns[':p' . $index++]  = 'email';
         }
-        if ($this->isColumnModified(ConfigTableMap::COL_VALUE)) {
-            $modifiedColumns[':p' . $index++]  = 'value';
-        }
-        if ($this->isColumnModified(ConfigTableMap::COL_TYPE)) {
-            $modifiedColumns[':p' . $index++]  = 'type';
-        }
-        if ($this->isColumnModified(ConfigTableMap::COL_ENABLE)) {
-            $modifiedColumns[':p' . $index++]  = 'enable';
-        }
-        if ($this->isColumnModified(ConfigTableMap::COL_CREATED_AT)) {
+        if ($this->isColumnModified(EmailTableMap::COL_CREATED_AT)) {
             $modifiedColumns[':p' . $index++]  = 'created_at';
         }
-        if ($this->isColumnModified(ConfigTableMap::COL_UPDATED_AT)) {
+        if ($this->isColumnModified(EmailTableMap::COL_UPDATED_AT)) {
             $modifiedColumns[':p' . $index++]  = 'updated_at';
         }
 
         $sql = sprintf(
-            'INSERT INTO configs (%s) VALUES (%s)',
+            'INSERT INTO emails (%s) VALUES (%s)',
             implode(', ', $modifiedColumns),
             implode(', ', array_keys($modifiedColumns))
         );
@@ -924,17 +777,8 @@ abstract class Config implements ActiveRecordInterface
                     case 'id':
                         $stmt->bindValue($identifier, $this->id, PDO::PARAM_INT);
                         break;
-                    case 'key':
-                        $stmt->bindValue($identifier, $this->key, PDO::PARAM_STR);
-                        break;
-                    case 'value':
-                        $stmt->bindValue($identifier, $this->value, PDO::PARAM_STR);
-                        break;
-                    case 'type':
-                        $stmt->bindValue($identifier, $this->type, PDO::PARAM_STR);
-                        break;
-                    case 'enable':
-                        $stmt->bindValue($identifier, (int) $this->enable, PDO::PARAM_INT);
+                    case 'email':
+                        $stmt->bindValue($identifier, $this->email, PDO::PARAM_STR);
                         break;
                     case 'created_at':
                         $stmt->bindValue($identifier, $this->created_at ? $this->created_at->format("Y-m-d H:i:s.u") : null, PDO::PARAM_STR);
@@ -988,7 +832,7 @@ abstract class Config implements ActiveRecordInterface
      */
     public function getByName($name, $type = TableMap::TYPE_PHPNAME)
     {
-        $pos = ConfigTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
+        $pos = EmailTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
         $field = $this->getByPosition($pos);
 
         return $field;
@@ -1008,21 +852,12 @@ abstract class Config implements ActiveRecordInterface
                 return $this->getId();
                 break;
             case 1:
-                return $this->getKey();
+                return $this->getEmail();
                 break;
             case 2:
-                return $this->getValue();
-                break;
-            case 3:
-                return $this->getType();
-                break;
-            case 4:
-                return $this->getEnable();
-                break;
-            case 5:
                 return $this->getCreatedAt();
                 break;
-            case 6:
+            case 3:
                 return $this->getUpdatedAt();
                 break;
             default:
@@ -1048,26 +883,23 @@ abstract class Config implements ActiveRecordInterface
     public function toArray($keyType = TableMap::TYPE_PHPNAME, $includeLazyLoadColumns = true, $alreadyDumpedObjects = array())
     {
 
-        if (isset($alreadyDumpedObjects['Config'][$this->hashCode()])) {
+        if (isset($alreadyDumpedObjects['Email'][$this->hashCode()])) {
             return '*RECURSION*';
         }
-        $alreadyDumpedObjects['Config'][$this->hashCode()] = true;
-        $keys = ConfigTableMap::getFieldNames($keyType);
+        $alreadyDumpedObjects['Email'][$this->hashCode()] = true;
+        $keys = EmailTableMap::getFieldNames($keyType);
         $result = array(
             $keys[0] => $this->getId(),
-            $keys[1] => $this->getKey(),
-            $keys[2] => $this->getValue(),
-            $keys[3] => $this->getType(),
-            $keys[4] => $this->getEnable(),
-            $keys[5] => $this->getCreatedAt(),
-            $keys[6] => $this->getUpdatedAt(),
+            $keys[1] => $this->getEmail(),
+            $keys[2] => $this->getCreatedAt(),
+            $keys[3] => $this->getUpdatedAt(),
         );
-        if ($result[$keys[5]] instanceof \DateTime) {
-            $result[$keys[5]] = $result[$keys[5]]->format('c');
+        if ($result[$keys[2]] instanceof \DateTime) {
+            $result[$keys[2]] = $result[$keys[2]]->format('c');
         }
 
-        if ($result[$keys[6]] instanceof \DateTime) {
-            $result[$keys[6]] = $result[$keys[6]]->format('c');
+        if ($result[$keys[3]] instanceof \DateTime) {
+            $result[$keys[3]] = $result[$keys[3]]->format('c');
         }
 
         $virtualColumns = $this->virtualColumns;
@@ -1088,11 +920,11 @@ abstract class Config implements ActiveRecordInterface
      *                one of the class type constants TableMap::TYPE_PHPNAME, TableMap::TYPE_CAMELNAME
      *                TableMap::TYPE_COLNAME, TableMap::TYPE_FIELDNAME, TableMap::TYPE_NUM.
      *                Defaults to TableMap::TYPE_PHPNAME.
-     * @return $this|\Models\Config
+     * @return $this|\Models\Email
      */
     public function setByName($name, $value, $type = TableMap::TYPE_PHPNAME)
     {
-        $pos = ConfigTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
+        $pos = EmailTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
 
         return $this->setByPosition($pos, $value);
     }
@@ -1103,7 +935,7 @@ abstract class Config implements ActiveRecordInterface
      *
      * @param  int $pos position in xml schema
      * @param  mixed $value field value
-     * @return $this|\Models\Config
+     * @return $this|\Models\Email
      */
     public function setByPosition($pos, $value)
     {
@@ -1112,21 +944,12 @@ abstract class Config implements ActiveRecordInterface
                 $this->setId($value);
                 break;
             case 1:
-                $this->setKey($value);
+                $this->setEmail($value);
                 break;
             case 2:
-                $this->setValue($value);
-                break;
-            case 3:
-                $this->setType($value);
-                break;
-            case 4:
-                $this->setEnable($value);
-                break;
-            case 5:
                 $this->setCreatedAt($value);
                 break;
-            case 6:
+            case 3:
                 $this->setUpdatedAt($value);
                 break;
         } // switch()
@@ -1153,28 +976,19 @@ abstract class Config implements ActiveRecordInterface
      */
     public function fromArray($arr, $keyType = TableMap::TYPE_PHPNAME)
     {
-        $keys = ConfigTableMap::getFieldNames($keyType);
+        $keys = EmailTableMap::getFieldNames($keyType);
 
         if (array_key_exists($keys[0], $arr)) {
             $this->setId($arr[$keys[0]]);
         }
         if (array_key_exists($keys[1], $arr)) {
-            $this->setKey($arr[$keys[1]]);
+            $this->setEmail($arr[$keys[1]]);
         }
         if (array_key_exists($keys[2], $arr)) {
-            $this->setValue($arr[$keys[2]]);
+            $this->setCreatedAt($arr[$keys[2]]);
         }
         if (array_key_exists($keys[3], $arr)) {
-            $this->setType($arr[$keys[3]]);
-        }
-        if (array_key_exists($keys[4], $arr)) {
-            $this->setEnable($arr[$keys[4]]);
-        }
-        if (array_key_exists($keys[5], $arr)) {
-            $this->setCreatedAt($arr[$keys[5]]);
-        }
-        if (array_key_exists($keys[6], $arr)) {
-            $this->setUpdatedAt($arr[$keys[6]]);
+            $this->setUpdatedAt($arr[$keys[3]]);
         }
     }
 
@@ -1195,7 +1009,7 @@ abstract class Config implements ActiveRecordInterface
      * @param string $data The source data to import from
      * @param string $keyType The type of keys the array uses.
      *
-     * @return $this|\Models\Config The current object, for fluid interface
+     * @return $this|\Models\Email The current object, for fluid interface
      */
     public function importFrom($parser, $data, $keyType = TableMap::TYPE_PHPNAME)
     {
@@ -1215,28 +1029,19 @@ abstract class Config implements ActiveRecordInterface
      */
     public function buildCriteria()
     {
-        $criteria = new Criteria(ConfigTableMap::DATABASE_NAME);
+        $criteria = new Criteria(EmailTableMap::DATABASE_NAME);
 
-        if ($this->isColumnModified(ConfigTableMap::COL_ID)) {
-            $criteria->add(ConfigTableMap::COL_ID, $this->id);
+        if ($this->isColumnModified(EmailTableMap::COL_ID)) {
+            $criteria->add(EmailTableMap::COL_ID, $this->id);
         }
-        if ($this->isColumnModified(ConfigTableMap::COL_KEY)) {
-            $criteria->add(ConfigTableMap::COL_KEY, $this->key);
+        if ($this->isColumnModified(EmailTableMap::COL_EMAIL)) {
+            $criteria->add(EmailTableMap::COL_EMAIL, $this->email);
         }
-        if ($this->isColumnModified(ConfigTableMap::COL_VALUE)) {
-            $criteria->add(ConfigTableMap::COL_VALUE, $this->value);
+        if ($this->isColumnModified(EmailTableMap::COL_CREATED_AT)) {
+            $criteria->add(EmailTableMap::COL_CREATED_AT, $this->created_at);
         }
-        if ($this->isColumnModified(ConfigTableMap::COL_TYPE)) {
-            $criteria->add(ConfigTableMap::COL_TYPE, $this->type);
-        }
-        if ($this->isColumnModified(ConfigTableMap::COL_ENABLE)) {
-            $criteria->add(ConfigTableMap::COL_ENABLE, $this->enable);
-        }
-        if ($this->isColumnModified(ConfigTableMap::COL_CREATED_AT)) {
-            $criteria->add(ConfigTableMap::COL_CREATED_AT, $this->created_at);
-        }
-        if ($this->isColumnModified(ConfigTableMap::COL_UPDATED_AT)) {
-            $criteria->add(ConfigTableMap::COL_UPDATED_AT, $this->updated_at);
+        if ($this->isColumnModified(EmailTableMap::COL_UPDATED_AT)) {
+            $criteria->add(EmailTableMap::COL_UPDATED_AT, $this->updated_at);
         }
 
         return $criteria;
@@ -1254,8 +1059,8 @@ abstract class Config implements ActiveRecordInterface
      */
     public function buildPkeyCriteria()
     {
-        $criteria = ChildConfigQuery::create();
-        $criteria->add(ConfigTableMap::COL_ID, $this->id);
+        $criteria = ChildEmailQuery::create();
+        $criteria->add(EmailTableMap::COL_ID, $this->id);
 
         return $criteria;
     }
@@ -1317,17 +1122,14 @@ abstract class Config implements ActiveRecordInterface
      * If desired, this method can also make copies of all associated (fkey referrers)
      * objects.
      *
-     * @param      object $copyObj An object of \Models\Config (or compatible) type.
+     * @param      object $copyObj An object of \Models\Email (or compatible) type.
      * @param      boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
      * @param      boolean $makeNew Whether to reset autoincrement PKs and make the object new.
      * @throws PropelException
      */
     public function copyInto($copyObj, $deepCopy = false, $makeNew = true)
     {
-        $copyObj->setKey($this->getKey());
-        $copyObj->setValue($this->getValue());
-        $copyObj->setType($this->getType());
-        $copyObj->setEnable($this->getEnable());
+        $copyObj->setEmail($this->getEmail());
         $copyObj->setCreatedAt($this->getCreatedAt());
         $copyObj->setUpdatedAt($this->getUpdatedAt());
         if ($makeNew) {
@@ -1345,7 +1147,7 @@ abstract class Config implements ActiveRecordInterface
      * objects.
      *
      * @param  boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
-     * @return \Models\Config Clone of current object.
+     * @return \Models\Email Clone of current object.
      * @throws PropelException
      */
     public function copy($deepCopy = false)
@@ -1366,10 +1168,7 @@ abstract class Config implements ActiveRecordInterface
     public function clear()
     {
         $this->id = null;
-        $this->key = null;
-        $this->value = null;
-        $this->type = null;
-        $this->enable = null;
+        $this->email = null;
         $this->created_at = null;
         $this->updated_at = null;
         $this->alreadyInSave = false;
@@ -1402,7 +1201,7 @@ abstract class Config implements ActiveRecordInterface
      */
     public function __toString()
     {
-        return (string) $this->exportTo(ConfigTableMap::DEFAULT_STRING_FORMAT);
+        return (string) $this->exportTo(EmailTableMap::DEFAULT_STRING_FORMAT);
     }
 
     // timestampable behavior
@@ -1410,11 +1209,11 @@ abstract class Config implements ActiveRecordInterface
     /**
      * Mark the current object so that the update date doesn't get updated during next save
      *
-     * @return     $this|ChildConfig The current object (for fluent API support)
+     * @return     $this|ChildEmail The current object (for fluent API support)
      */
     public function keepUpdateDateUnchanged()
     {
-        $this->modifiedColumns[ConfigTableMap::COL_UPDATED_AT] = true;
+        $this->modifiedColumns[EmailTableMap::COL_UPDATED_AT] = true;
 
         return $this;
     }
