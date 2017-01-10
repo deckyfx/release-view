@@ -20,18 +20,18 @@ use Propel\Runtime\Exception\PropelException;
  *
  *
  * @method     ChildConfigQuery orderById($order = Criteria::ASC) Order by the id column
- * @method     ChildConfigQuery orderByKey($order = Criteria::ASC) Order by the key column
+ * @method     ChildConfigQuery orderByName($order = Criteria::ASC) Order by the name column
  * @method     ChildConfigQuery orderByValue($order = Criteria::ASC) Order by the value column
  * @method     ChildConfigQuery orderByType($order = Criteria::ASC) Order by the type column
- * @method     ChildConfigQuery orderByEnable($order = Criteria::ASC) Order by the enable column
+ * @method     ChildConfigQuery orderByEnabled($order = Criteria::ASC) Order by the enabled column
  * @method     ChildConfigQuery orderByCreatedAt($order = Criteria::ASC) Order by the created_at column
  * @method     ChildConfigQuery orderByUpdatedAt($order = Criteria::ASC) Order by the updated_at column
  *
  * @method     ChildConfigQuery groupById() Group by the id column
- * @method     ChildConfigQuery groupByKey() Group by the key column
+ * @method     ChildConfigQuery groupByName() Group by the name column
  * @method     ChildConfigQuery groupByValue() Group by the value column
  * @method     ChildConfigQuery groupByType() Group by the type column
- * @method     ChildConfigQuery groupByEnable() Group by the enable column
+ * @method     ChildConfigQuery groupByEnabled() Group by the enabled column
  * @method     ChildConfigQuery groupByCreatedAt() Group by the created_at column
  * @method     ChildConfigQuery groupByUpdatedAt() Group by the updated_at column
  *
@@ -47,10 +47,10 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildConfig findOneOrCreate(ConnectionInterface $con = null) Return the first ChildConfig matching the query, or a new ChildConfig object populated from the query conditions when no match is found
  *
  * @method     ChildConfig findOneById(int $id) Return the first ChildConfig filtered by the id column
- * @method     ChildConfig findOneByKey(string $key) Return the first ChildConfig filtered by the key column
+ * @method     ChildConfig findOneByName(string $name) Return the first ChildConfig filtered by the name column
  * @method     ChildConfig findOneByValue(string $value) Return the first ChildConfig filtered by the value column
  * @method     ChildConfig findOneByType(string $type) Return the first ChildConfig filtered by the type column
- * @method     ChildConfig findOneByEnable(boolean $enable) Return the first ChildConfig filtered by the enable column
+ * @method     ChildConfig findOneByEnabled(boolean $enabled) Return the first ChildConfig filtered by the enabled column
  * @method     ChildConfig findOneByCreatedAt(string $created_at) Return the first ChildConfig filtered by the created_at column
  * @method     ChildConfig findOneByUpdatedAt(string $updated_at) Return the first ChildConfig filtered by the updated_at column *
 
@@ -58,19 +58,19 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildConfig requireOne(ConnectionInterface $con = null) Return the first ChildConfig matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
  * @method     ChildConfig requireOneById(int $id) Return the first ChildConfig filtered by the id column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildConfig requireOneByKey(string $key) Return the first ChildConfig filtered by the key column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildConfig requireOneByName(string $name) Return the first ChildConfig filtered by the name column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildConfig requireOneByValue(string $value) Return the first ChildConfig filtered by the value column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildConfig requireOneByType(string $type) Return the first ChildConfig filtered by the type column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildConfig requireOneByEnable(boolean $enable) Return the first ChildConfig filtered by the enable column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildConfig requireOneByEnabled(boolean $enabled) Return the first ChildConfig filtered by the enabled column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildConfig requireOneByCreatedAt(string $created_at) Return the first ChildConfig filtered by the created_at column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildConfig requireOneByUpdatedAt(string $updated_at) Return the first ChildConfig filtered by the updated_at column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
  * @method     ChildConfig[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildConfig objects based on current ModelCriteria
  * @method     ChildConfig[]|ObjectCollection findById(int $id) Return ChildConfig objects filtered by the id column
- * @method     ChildConfig[]|ObjectCollection findByKey(string $key) Return ChildConfig objects filtered by the key column
+ * @method     ChildConfig[]|ObjectCollection findByName(string $name) Return ChildConfig objects filtered by the name column
  * @method     ChildConfig[]|ObjectCollection findByValue(string $value) Return ChildConfig objects filtered by the value column
  * @method     ChildConfig[]|ObjectCollection findByType(string $type) Return ChildConfig objects filtered by the type column
- * @method     ChildConfig[]|ObjectCollection findByEnable(boolean $enable) Return ChildConfig objects filtered by the enable column
+ * @method     ChildConfig[]|ObjectCollection findByEnabled(boolean $enabled) Return ChildConfig objects filtered by the enabled column
  * @method     ChildConfig[]|ObjectCollection findByCreatedAt(string $created_at) Return ChildConfig objects filtered by the created_at column
  * @method     ChildConfig[]|ObjectCollection findByUpdatedAt(string $updated_at) Return ChildConfig objects filtered by the updated_at column
  * @method     ChildConfig[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
@@ -171,7 +171,7 @@ abstract class ConfigQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT id, key, value, type, enable, created_at, updated_at FROM configs WHERE id = :p0';
+        $sql = 'SELECT id, name, value, type, enabled, created_at, updated_at FROM configs WHERE id = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -303,28 +303,28 @@ abstract class ConfigQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query on the key column
+     * Filter the query on the name column
      *
      * Example usage:
      * <code>
-     * $query->filterByKey('fooValue');   // WHERE key = 'fooValue'
-     * $query->filterByKey('%fooValue%', Criteria::LIKE); // WHERE key LIKE '%fooValue%'
+     * $query->filterByName('fooValue');   // WHERE name = 'fooValue'
+     * $query->filterByName('%fooValue%', Criteria::LIKE); // WHERE name LIKE '%fooValue%'
      * </code>
      *
-     * @param     string $key The value to use as filter.
+     * @param     string $name The value to use as filter.
      * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
      * @return $this|ChildConfigQuery The current query, for fluid interface
      */
-    public function filterByKey($key = null, $comparison = null)
+    public function filterByName($name = null, $comparison = null)
     {
         if (null === $comparison) {
-            if (is_array($key)) {
+            if (is_array($name)) {
                 $comparison = Criteria::IN;
             }
         }
 
-        return $this->addUsingAlias(ConfigTableMap::COL_KEY, $key, $comparison);
+        return $this->addUsingAlias(ConfigTableMap::COL_NAME, $name, $comparison);
     }
 
     /**
@@ -378,15 +378,15 @@ abstract class ConfigQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query on the enable column
+     * Filter the query on the enabled column
      *
      * Example usage:
      * <code>
-     * $query->filterByEnable(true); // WHERE enable = true
-     * $query->filterByEnable('yes'); // WHERE enable = true
+     * $query->filterByEnabled(true); // WHERE enabled = true
+     * $query->filterByEnabled('yes'); // WHERE enabled = true
      * </code>
      *
-     * @param     boolean|string $enable The value to use as filter.
+     * @param     boolean|string $enabled The value to use as filter.
      *              Non-boolean arguments are converted using the following rules:
      *                * 1, '1', 'true',  'on',  and 'yes' are converted to boolean true
      *                * 0, '0', 'false', 'off', and 'no'  are converted to boolean false
@@ -395,13 +395,13 @@ abstract class ConfigQuery extends ModelCriteria
      *
      * @return $this|ChildConfigQuery The current query, for fluid interface
      */
-    public function filterByEnable($enable = null, $comparison = null)
+    public function filterByEnabled($enabled = null, $comparison = null)
     {
-        if (is_string($enable)) {
-            $enable = in_array(strtolower($enable), array('false', 'off', '-', 'no', 'n', '0', '')) ? false : true;
+        if (is_string($enabled)) {
+            $enabled = in_array(strtolower($enabled), array('false', 'off', '-', 'no', 'n', '0', '')) ? false : true;
         }
 
-        return $this->addUsingAlias(ConfigTableMap::COL_ENABLE, $enable, $comparison);
+        return $this->addUsingAlias(ConfigTableMap::COL_ENABLED, $enabled, $comparison);
     }
 
     /**

@@ -12,10 +12,10 @@ DROP TABLE IF EXISTS `configs`;
 CREATE TABLE `configs`
 (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `key` VARCHAR(255) DEFAULT '',
+    `name` VARCHAR(255) DEFAULT '',
     `value` TEXT,
     `type` enum('string','int','double','boolean'),
-    `enable` TINYINT(1),
+    `enabled` TINYINT(1),
     `created_at` DATETIME,
     `updated_at` DATETIME,
     PRIMARY KEY (`id`)

@@ -70,12 +70,12 @@ abstract class Config implements ActiveRecordInterface
     protected $id;
 
     /**
-     * The value for the key field.
+     * The value for the name field.
      *
      * Note: this column has a database default value of: ''
      * @var        string
      */
-    protected $key;
+    protected $name;
 
     /**
      * The value for the value field.
@@ -92,11 +92,11 @@ abstract class Config implements ActiveRecordInterface
     protected $type;
 
     /**
-     * The value for the enable field.
+     * The value for the enabled field.
      *
      * @var        boolean
      */
-    protected $enable;
+    protected $enabled;
 
     /**
      * The value for the created_at field.
@@ -128,7 +128,7 @@ abstract class Config implements ActiveRecordInterface
      */
     public function applyDefaultValues()
     {
-        $this->key = '';
+        $this->name = '';
     }
 
     /**
@@ -369,13 +369,13 @@ abstract class Config implements ActiveRecordInterface
     }
 
     /**
-     * Get the [key] column value.
+     * Get the [name] column value.
      *
      * @return string
      */
-    public function getKey()
+    public function getName()
     {
-        return $this->key;
+        return $this->name;
     }
 
     /**
@@ -399,23 +399,23 @@ abstract class Config implements ActiveRecordInterface
     }
 
     /**
-     * Get the [enable] column value.
+     * Get the [enabled] column value.
      *
      * @return boolean
      */
-    public function getEnable()
+    public function getEnabled()
     {
-        return $this->enable;
+        return $this->enabled;
     }
 
     /**
-     * Get the [enable] column value.
+     * Get the [enabled] column value.
      *
      * @return boolean
      */
-    public function isEnable()
+    public function isEnabled()
     {
-        return $this->getEnable();
+        return $this->getEnabled();
     }
 
     /**
@@ -479,24 +479,24 @@ abstract class Config implements ActiveRecordInterface
     } // setId()
 
     /**
-     * Set the value of [key] column.
+     * Set the value of [name] column.
      *
      * @param string $v new value
      * @return $this|\Models\Config The current object (for fluent API support)
      */
-    public function setKey($v)
+    public function setName($v)
     {
         if ($v !== null) {
             $v = (string) $v;
         }
 
-        if ($this->key !== $v) {
-            $this->key = $v;
-            $this->modifiedColumns[ConfigTableMap::COL_KEY] = true;
+        if ($this->name !== $v) {
+            $this->name = $v;
+            $this->modifiedColumns[ConfigTableMap::COL_NAME] = true;
         }
 
         return $this;
-    } // setKey()
+    } // setName()
 
     /**
      * Set the value of [value] column.
@@ -539,7 +539,7 @@ abstract class Config implements ActiveRecordInterface
     } // setType()
 
     /**
-     * Sets the value of the [enable] column.
+     * Sets the value of the [enabled] column.
      * Non-boolean arguments are converted using the following rules:
      *   * 1, '1', 'true',  'on',  and 'yes' are converted to boolean true
      *   * 0, '0', 'false', 'off', and 'no'  are converted to boolean false
@@ -548,7 +548,7 @@ abstract class Config implements ActiveRecordInterface
      * @param  boolean|integer|string $v The new value
      * @return $this|\Models\Config The current object (for fluent API support)
      */
-    public function setEnable($v)
+    public function setEnabled($v)
     {
         if ($v !== null) {
             if (is_string($v)) {
@@ -558,13 +558,13 @@ abstract class Config implements ActiveRecordInterface
             }
         }
 
-        if ($this->enable !== $v) {
-            $this->enable = $v;
-            $this->modifiedColumns[ConfigTableMap::COL_ENABLE] = true;
+        if ($this->enabled !== $v) {
+            $this->enabled = $v;
+            $this->modifiedColumns[ConfigTableMap::COL_ENABLED] = true;
         }
 
         return $this;
-    } // setEnable()
+    } // setEnabled()
 
     /**
      * Sets the value of [created_at] column to a normalized version of the date/time value specified.
@@ -616,7 +616,7 @@ abstract class Config implements ActiveRecordInterface
      */
     public function hasOnlyDefaultValues()
     {
-            if ($this->key !== '') {
+            if ($this->name !== '') {
                 return false;
             }
 
@@ -649,8 +649,8 @@ abstract class Config implements ActiveRecordInterface
             $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : ConfigTableMap::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)];
             $this->id = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : ConfigTableMap::translateFieldName('Key', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->key = (null !== $col) ? (string) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : ConfigTableMap::translateFieldName('Name', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->name = (null !== $col) ? (string) $col : null;
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : ConfigTableMap::translateFieldName('Value', TableMap::TYPE_PHPNAME, $indexType)];
             $this->value = (null !== $col) ? (string) $col : null;
@@ -658,8 +658,8 @@ abstract class Config implements ActiveRecordInterface
             $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : ConfigTableMap::translateFieldName('Type', TableMap::TYPE_PHPNAME, $indexType)];
             $this->type = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : ConfigTableMap::translateFieldName('Enable', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->enable = (null !== $col) ? (boolean) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : ConfigTableMap::translateFieldName('Enabled', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->enabled = (null !== $col) ? (boolean) $col : null;
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : ConfigTableMap::translateFieldName('CreatedAt', TableMap::TYPE_PHPNAME, $indexType)];
             if ($col === '0000-00-00 00:00:00') {
@@ -892,8 +892,8 @@ abstract class Config implements ActiveRecordInterface
         if ($this->isColumnModified(ConfigTableMap::COL_ID)) {
             $modifiedColumns[':p' . $index++]  = 'id';
         }
-        if ($this->isColumnModified(ConfigTableMap::COL_KEY)) {
-            $modifiedColumns[':p' . $index++]  = 'key';
+        if ($this->isColumnModified(ConfigTableMap::COL_NAME)) {
+            $modifiedColumns[':p' . $index++]  = 'name';
         }
         if ($this->isColumnModified(ConfigTableMap::COL_VALUE)) {
             $modifiedColumns[':p' . $index++]  = 'value';
@@ -901,8 +901,8 @@ abstract class Config implements ActiveRecordInterface
         if ($this->isColumnModified(ConfigTableMap::COL_TYPE)) {
             $modifiedColumns[':p' . $index++]  = 'type';
         }
-        if ($this->isColumnModified(ConfigTableMap::COL_ENABLE)) {
-            $modifiedColumns[':p' . $index++]  = 'enable';
+        if ($this->isColumnModified(ConfigTableMap::COL_ENABLED)) {
+            $modifiedColumns[':p' . $index++]  = 'enabled';
         }
         if ($this->isColumnModified(ConfigTableMap::COL_CREATED_AT)) {
             $modifiedColumns[':p' . $index++]  = 'created_at';
@@ -924,8 +924,8 @@ abstract class Config implements ActiveRecordInterface
                     case 'id':
                         $stmt->bindValue($identifier, $this->id, PDO::PARAM_INT);
                         break;
-                    case 'key':
-                        $stmt->bindValue($identifier, $this->key, PDO::PARAM_STR);
+                    case 'name':
+                        $stmt->bindValue($identifier, $this->name, PDO::PARAM_STR);
                         break;
                     case 'value':
                         $stmt->bindValue($identifier, $this->value, PDO::PARAM_STR);
@@ -933,8 +933,8 @@ abstract class Config implements ActiveRecordInterface
                     case 'type':
                         $stmt->bindValue($identifier, $this->type, PDO::PARAM_STR);
                         break;
-                    case 'enable':
-                        $stmt->bindValue($identifier, (int) $this->enable, PDO::PARAM_INT);
+                    case 'enabled':
+                        $stmt->bindValue($identifier, (int) $this->enabled, PDO::PARAM_INT);
                         break;
                     case 'created_at':
                         $stmt->bindValue($identifier, $this->created_at ? $this->created_at->format("Y-m-d H:i:s.u") : null, PDO::PARAM_STR);
@@ -1008,7 +1008,7 @@ abstract class Config implements ActiveRecordInterface
                 return $this->getId();
                 break;
             case 1:
-                return $this->getKey();
+                return $this->getName();
                 break;
             case 2:
                 return $this->getValue();
@@ -1017,7 +1017,7 @@ abstract class Config implements ActiveRecordInterface
                 return $this->getType();
                 break;
             case 4:
-                return $this->getEnable();
+                return $this->getEnabled();
                 break;
             case 5:
                 return $this->getCreatedAt();
@@ -1055,10 +1055,10 @@ abstract class Config implements ActiveRecordInterface
         $keys = ConfigTableMap::getFieldNames($keyType);
         $result = array(
             $keys[0] => $this->getId(),
-            $keys[1] => $this->getKey(),
+            $keys[1] => $this->getName(),
             $keys[2] => $this->getValue(),
             $keys[3] => $this->getType(),
-            $keys[4] => $this->getEnable(),
+            $keys[4] => $this->getEnabled(),
             $keys[5] => $this->getCreatedAt(),
             $keys[6] => $this->getUpdatedAt(),
         );
@@ -1112,7 +1112,7 @@ abstract class Config implements ActiveRecordInterface
                 $this->setId($value);
                 break;
             case 1:
-                $this->setKey($value);
+                $this->setName($value);
                 break;
             case 2:
                 $this->setValue($value);
@@ -1121,7 +1121,7 @@ abstract class Config implements ActiveRecordInterface
                 $this->setType($value);
                 break;
             case 4:
-                $this->setEnable($value);
+                $this->setEnabled($value);
                 break;
             case 5:
                 $this->setCreatedAt($value);
@@ -1159,7 +1159,7 @@ abstract class Config implements ActiveRecordInterface
             $this->setId($arr[$keys[0]]);
         }
         if (array_key_exists($keys[1], $arr)) {
-            $this->setKey($arr[$keys[1]]);
+            $this->setName($arr[$keys[1]]);
         }
         if (array_key_exists($keys[2], $arr)) {
             $this->setValue($arr[$keys[2]]);
@@ -1168,7 +1168,7 @@ abstract class Config implements ActiveRecordInterface
             $this->setType($arr[$keys[3]]);
         }
         if (array_key_exists($keys[4], $arr)) {
-            $this->setEnable($arr[$keys[4]]);
+            $this->setEnabled($arr[$keys[4]]);
         }
         if (array_key_exists($keys[5], $arr)) {
             $this->setCreatedAt($arr[$keys[5]]);
@@ -1220,8 +1220,8 @@ abstract class Config implements ActiveRecordInterface
         if ($this->isColumnModified(ConfigTableMap::COL_ID)) {
             $criteria->add(ConfigTableMap::COL_ID, $this->id);
         }
-        if ($this->isColumnModified(ConfigTableMap::COL_KEY)) {
-            $criteria->add(ConfigTableMap::COL_KEY, $this->key);
+        if ($this->isColumnModified(ConfigTableMap::COL_NAME)) {
+            $criteria->add(ConfigTableMap::COL_NAME, $this->name);
         }
         if ($this->isColumnModified(ConfigTableMap::COL_VALUE)) {
             $criteria->add(ConfigTableMap::COL_VALUE, $this->value);
@@ -1229,8 +1229,8 @@ abstract class Config implements ActiveRecordInterface
         if ($this->isColumnModified(ConfigTableMap::COL_TYPE)) {
             $criteria->add(ConfigTableMap::COL_TYPE, $this->type);
         }
-        if ($this->isColumnModified(ConfigTableMap::COL_ENABLE)) {
-            $criteria->add(ConfigTableMap::COL_ENABLE, $this->enable);
+        if ($this->isColumnModified(ConfigTableMap::COL_ENABLED)) {
+            $criteria->add(ConfigTableMap::COL_ENABLED, $this->enabled);
         }
         if ($this->isColumnModified(ConfigTableMap::COL_CREATED_AT)) {
             $criteria->add(ConfigTableMap::COL_CREATED_AT, $this->created_at);
@@ -1324,10 +1324,10 @@ abstract class Config implements ActiveRecordInterface
      */
     public function copyInto($copyObj, $deepCopy = false, $makeNew = true)
     {
-        $copyObj->setKey($this->getKey());
+        $copyObj->setName($this->getName());
         $copyObj->setValue($this->getValue());
         $copyObj->setType($this->getType());
-        $copyObj->setEnable($this->getEnable());
+        $copyObj->setEnabled($this->getEnabled());
         $copyObj->setCreatedAt($this->getCreatedAt());
         $copyObj->setUpdatedAt($this->getUpdatedAt());
         if ($makeNew) {
@@ -1366,10 +1366,10 @@ abstract class Config implements ActiveRecordInterface
     public function clear()
     {
         $this->id = null;
-        $this->key = null;
+        $this->name = null;
         $this->value = null;
         $this->type = null;
-        $this->enable = null;
+        $this->enabled = null;
         $this->created_at = null;
         $this->updated_at = null;
         $this->alreadyInSave = false;

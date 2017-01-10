@@ -14,6 +14,16 @@
     use Models\Email;
     use Models\EmailQuery;
 
+	
+	use Propel\Runtime\Propel;
+    use Monolog\Logger;
+	use Monolog\Handler\StreamHandler;
+
+	//$logger = new Logger('defaultLogger');
+	//$logger->pushHandler(new StreamHandler('/Users/decky/Documents/php/release-view/propel.log'));
+	//Propel::getConnection()->useDebug(true);
+	//Propel::getServiceContainer()->setLogger('defaultLogger', $logger);
+
 	class Action {
 	    const PRICE_BUTTER  = 1.00;
 	    const PRICE_MILK    = 3.00;
@@ -31,6 +41,7 @@
 	    	$this->message 			= 'Invalid AUTHKEY';
 	    	if ($chalenge == $authkey) {
 	    		$this->success = true;
+	    		$this->message = '';
 	    	}
 	        $this->data['authkey'] 	= $chalenge;
 	    }
@@ -162,14 +173,14 @@
 				$config->setName($_POST['config-name']);
 				$config->setValue($_POST['config-value']);
 				$config->setType($_POST['config-type']);
-				$config->setEnabled($_POST['config-enabled']);
+				$config->setEnabled($_POST['config-enabled']? 1:0);
 				$config->save();
 	    	} else {
 	    		$email = ConfigQuery::Create()->findPK($id);
 			    $config->setName($_POST['config-name']);
 				$config->setValue($_POST['config-value']);
 				$config->setType($_POST['config-type']);
-				$config->setEnabled($_POST['config-enabled']);
+				$config->setEnabled($_POST['config-enabled']? 1:0);
 				$config->save();
 	    	}
 	    	$this->success = true;
@@ -177,7 +188,7 @@
 
 		protected function config_remove() {
 			$id = $_POST['remove-id'];
-			$emconfigail = Config::Create()->findPK($id);
+			$config = Config::Create()->findPK($id);
 			$config->delete();
 			$this->success = true;
 		}

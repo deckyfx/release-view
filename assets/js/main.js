@@ -22,7 +22,7 @@ $( document ).ready(function() {
 		            		this.build_list = [];
 		            		for (var i = 0; i < response_data.builds.length; i++) {
 		            			var item = response_data.builds[i];
-		            			var item_element = '<li class="list-group-item" id="build_{BUILD_ID}"><span class="badge">{BUILD_DATE}</span><span class="{BUILD_ICON}" aria-hidden="true"></span><span style="margin-left: 5px; margin-right: 5px;">{BUILD_NAME} ({BUILD_VERSION})</span><span class="btn">&nbsp;</span><div class="dropdown pull-right" style="margin-right:10px;"><button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span><span class="caret"></span></button> <ul class="dropdown-menu" aria-labelledby="dropdownMenu1"><li></li><li><a href="#" class="build-edit-button" data-idx="{BUILD_IDX}"><i class="glyphicon glyphicon-pencil"></i> Edit</a></li> <li><a href="#" class="build-notify-button" data-idx="{BUILD_IDX}"><i class="glyphicon glyphicon-envelope"></i> Notify By Mail</a></li> <li><a href="#" class="build-remove-button" data-idx="{BUILD_IDX}"><i class="glyphicon glyphicon-remove"></i>  Remove</a></li></ul></div><a style="margin-left: 5px; margin-right: 5px;" class="btn btn-success pull-right" href="{BUILD_URL}" target="_blank">Download</a><a style="margin-left: 5px; margin-right: 5px;" class="btn btn-primary pull-right" data-toggle="collapse" data-target="#build_{BUILD_ID}_changeset" aria-expanded="false" aria-controls="build_{BUILD_ID}_changeset">Changes</a><div class="collapse" id="build_{BUILD_ID}_changeset"><pre style="margin-top:10px;">Changeset:\n{BUILD_NOTE}</pre></div></li>';
+		            			var item_element = '<li class="list-group-item" id="build_{BUILD_ID}"><span class="badge">{BUILD_DATE}</span><span class="{BUILD_ICON}" aria-hidden="true"></span><span style="margin-left: 5px; margin-right: 5px;">{BUILD_NAME} ({BUILD_VERSION})</span><span class="btn">&nbsp;</span><div class="dropdown pull-right" style="margin-right:10px;"><button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span><span class="caret"></span></button> <ul class="dropdown-menu" aria-labelledby="dropdownMenu1"><li><a href="#" class="build-edit-button" data-idx="{BUILD_IDX}"><i class="glyphicon glyphicon-pencil"></i> Edit</a></li> <li><a href="#" class="build-notify-button" data-idx="{BUILD_IDX}"><i class="glyphicon glyphicon-envelope"></i> Notify By Mail</a></li> <li><a href="#" class="build-remove-button" data-idx="{BUILD_IDX}"><i class="glyphicon glyphicon-remove"></i>  Remove</a></li></ul></div><a style="margin-left: 5px; margin-right: 5px;" class="btn btn-success pull-right" href="{BUILD_URL}" target="_blank">Download</a><a style="margin-left: 5px; margin-right: 5px;" class="btn btn-primary pull-right" data-toggle="collapse" data-target="#build_{BUILD_ID}_changeset" aria-expanded="false" aria-controls="build_{BUILD_ID}_changeset">Changes</a><div class="collapse" id="build_{BUILD_ID}_changeset"><pre style="margin-top:10px;">Changeset:\n{BUILD_NOTE}</pre></div></li>';
 		            			var replace = [
 		            				'{BUILD_ID}',
 		            				'{BUILD_IDX}',
@@ -88,7 +88,7 @@ $( document ).ready(function() {
 						$('#add-build-modal').find('#build-version').val(item.Version);
 						$('#add-build-modal').find('#build-url').val(item.Url);
 						$('#add-build-modal').find('#build-note').val(item.Note);
-						$('#add-build-modal').find('#build-id').val(item.Id);	
+						$('#add-build-modal').find('#build-id').val(item.Id);
 					} else {
 		    			$('#add-build-modal').find('#add-build-modal-form')[0].reset();	
 					}
@@ -97,13 +97,13 @@ $( document ).ready(function() {
 				    		$('#add-build-modal').modal('toggle'); 	
 				    		this.run('build.list');	
 				    	}.bind(this));
-				    }); 
+				    }.bind(this)); 
 					$('#add-build-modal').find('.modal-title').html(dialog_title);	
 		    		$('#add-build-modal').modal('toggle');
 		    		return this;
 				},
 				submit: function(){
-			    	var post_data 		= $('#add-build-modal').find('#add-build-form').serializeJSON();
+			    	var post_data 		= $('#add-build-modal').find('#add-build-modal-form').serializeJSON();
 			    	post_data.action 	= 'build_submit';
 			    	var callback 		= (arguments[0] === undefined)? function(){}:arguments[0];
 			        return $.ajax({
@@ -118,7 +118,7 @@ $( document ).ready(function() {
 		            		if (!success) {
 		            			throw new Error(response_data.message);
 		            		}
-		            		this.notify('Build added!', 1);
+		            		this.notify('Build ' + (post_data['build-id']? 'updated':'added') + '!', 1);
 							callback.apply(this, []);
 		            	} catch (e) {
 							this.notify(e, 0);
@@ -192,13 +192,19 @@ $( document ).ready(function() {
 		            			throw new Error(response_data.message);
 		            		}
 		            		$('#email-list').empty();
-		            		this.build_list = [];
+		            		this.email_list = [];
 		            		for (var i = 0; i < response_data.emails.length; i++) {
 		            			var item = response_data.emails[i];
-		            			var item_element = '';
+		            			var item_element = '<li class="list-group-item" id="email_{EMAIL_ID}"> <span style="margin-left: 5px; margin-right: 5px;">{EMAIL_ADDRESS}</span> <span class="btn">&nbsp;</span> <div class="dropdown pull-right" style="margin-right:10px;"><button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> <span class="caret"></span></button> <ul class="dropdown-menu" aria-labelledby="dropdownMenu1"><li><a href="#" class="email-edit-button" data-idx="{EMAIL_IDX}"><i class="glyphicon glyphicon-pencil"></i> Edit</a></li><li><a href="#" class="email-remove-button" data-idx="{EMAIL_IDX}"><i class="glyphicon glyphicon-remove"></i> Remove</a></li></ul> </div></li>';
 		            			var replace = [
+		            				'{EMAIL_ID}',
+		            				'{EMAIL_IDX}',
+		            				'{EMAIL_ADDRESS}'
 		            			];
 		            			var replacement = [
+		            				item.Id,
+		            				i,
+		            				item.Email
 		            			];
 		            			for (n = 0; n < replace.length; n++) {
 		            				item_element = item_element.replace(new RegExp(replace[n], 'g'), replacement[n]);
@@ -206,10 +212,15 @@ $( document ).ready(function() {
 		            			$('#email-list').append( item_element );
 		            			this.email_list.push(item);
 		            		}
+	            			$('.email-edit-button').click(function(ev){
+	            				this.run('auth', function(){
+						    		this.run('maillist.openform', ev);
+						    	}.bind(this));
+	            			}.bind(this));
 	            			$('.email-remove-button').click(function(ev){	            				
 	            				this.run('auth', function(){
-						    		this.run('build.confirmremove', ev);
-						    	});
+						    		this.run('maillist.confirmremove', ev);
+						    	}.bind(this));
 	            			}.bind(this));
 							callback.apply(this, []);
 		            	} catch (e) {
@@ -230,8 +241,9 @@ $( document ).ready(function() {
 						var el = $(ev.target);
 						var idx = el.data('idx');
 						var item = this.email_list[idx];
-						dialog_title = "Edit Build ID: " + item.Id;						
+						dialog_title = "Edit Email ID: " + item.Id;						
 						$('#add-email-modal').find('#email-name').val(item.Email);
+						$('#add-email-modal').find('#email-id').val(item.Id);
 					} else {
 		    			$('#add-email-modal').find('#add-email-modal-form')[0].reset();	
 					}
@@ -239,7 +251,7 @@ $( document ).ready(function() {
 				    	this.run('maillist.submit', function(){
 				    		$('#add-email-modal').modal('toggle'); 	
 				    		this.run('maillist.list');	
-				    	});
+				    	}.bind(this));
 				    }.bind(this)); 
 					$('#add-email-modal').find('.modal-title').html(dialog_title);	
 		    		$('#add-email-modal').modal('toggle');
@@ -261,7 +273,7 @@ $( document ).ready(function() {
 		            		if (!success) {
 		            			throw new Error(response_data.message);
 		            		}
-		            		this.notify('Email added!', 1);
+		            		this.notify('Email ' + (post_data['email-id']? 'updated':'added') + '!', 1);
 							callback.apply(this, []);
 		            	} catch (e) {
 							this.notify(e, 0);
@@ -277,16 +289,16 @@ $( document ).ready(function() {
 					var ev = arguments[0];					
 					var el = $(ev.target);
 					var idx = el.data('idx');
-					var item = this.build_list[idx];
+					var item = this.email_list[idx];
 					$('#remove-email-modal').find('#remove-email-modal-submit').off("click");
 					$('#remove-email-modal').find('#remove-id').val(item.Id);
-					$('#remove-email-modal').find('#remove-email-modal-text').html('ID: ' + item.Id + ', Name: ' + item.Name + ', Version: ' + item.Version);
+					$('#remove-email-modal').find('#remove-email-modal-text').html('ID: ' + item.Id + ', Email: ' + item.Email);
 					$('#remove-email-modal').find('#remove-email-modal-submit').click(function(){
 				    	this.run('maillist.remove', function(){
 				    		$('#remove-email-modal').modal('toggle'); 	
 				    		this.run('maillist.list');	
-				    	});
-				    });	
+				    	}.bind(this));
+				    }.bind(this));	
 					$('#remove-email-modal').modal('toggle');
 		    		return this;
 				},
@@ -335,29 +347,56 @@ $( document ).ready(function() {
 		            			throw new Error(response_data.message);
 		            		}
 		            		$('#config-list').empty();
-		            		this.build_list = [];
+		            		this.config_list = [];
 		            		for (var i = 0; i < response_data.configs.length; i++) {
 		            			var item = response_data.configs[i];
-		            			var item_element = '';
+		            			var item_element = '<li class="list-group-item" id="build_{CONFIG_ID}"><span class="badge pull-left" style="margin-top: 7px;">{CONFIG_TYPE}</span><span style="margin-left: 5px;margin-right: 5px;font-weight: bolder;">{CONFIG_NAME} :</span><span style="margin-left: 5px; margin-right: 5px;">{CONFIG_VALUE}</span><span class="btn">&nbsp;</span><div class="dropdown pull-right" style="margin-right:10px;"><button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span><span class="caret"></span></button> <ul class="dropdown-menu" aria-labelledby="dropdownMenu1"><li><a href="#" class="config-edit-button" data-idx="{CONFIG_IDX}"><i class="glyphicon glyphicon-pencil"></i> Edit</a></li>  <li><a href="#" class="config-remove-button" data-idx="{CONFIG_IDX}"><i class="glyphicon glyphicon-remove"></i>  Remove</a></li></ul></div></li>';
 		            			var replace = [
+		            				'{CONFIG_ID}',
+		            				'{CONFIG_IDX}',
+		            				'{CONFIG_TYPE}',
+		            				'{CONFIG_NAME}',
+		            				'{CONFIG_VALUE}'
 		            			];
+		            			switch (item.Type) {
+		            				case 'string': {
+		            					item.TypeText = 'String';
+		            				} break;
+		            				case 'int': {
+		            					item.TypeText = 'Integer';
+		            				} break;
+		            				case 'double': {
+		            					item.TypeText = 'Double';
+		            				} break;
+		            				case 'boolean': {
+		            					item.TypeText = 'Boolean';
+		            				} break;
+		            				default: {
+		            					item.TypeText = 'Other';
+		            				} break;
+		            			}
 		            			var replacement = [
+		            				item.Id,
+		            				i,
+		            				item.TypeText,
+		            				item.Name,
+		            				item.Value
 		            			];
 		            			for (n = 0; n < replace.length; n++) {
 		            				item_element = item_element.replace(new RegExp(replace[n], 'g'), replacement[n]);
 		            			}
 		            			$('#config-list').append( item_element );
 		            			this.config_list.push(item);
-		            		}		            		
+		            		}
 	            			$('.config-edit-button').click(function(ev){
 	            				this.run('auth', function(){
 						    		this.run('config.openform', ev);
-						    	});
+						    	}.bind(this));
 	            			}.bind(this));
 	            			$('.config-remove-button').click(function(ev){	            				
 	            				this.run('auth', function(){
 						    		this.run('config.confirmremove', ev);
-						    	});
+						    	}.bind(this));
 	            			}.bind(this));
 							callback.apply(this, []);
 		            	} catch (e) {
@@ -380,9 +419,11 @@ $( document ).ready(function() {
 						var item = this.config_list[idx];
 						dialog_title = "Edit Config ID: " + item.Id;						
 						$('#add-config-modal').find('#config-name').val(item.Name);
-						$('#add-config-modal').find('#config-version').val(item.Version);
-						$('#add-config-modal').find('#config-url').val(item.Url);
-						$('#add-config-modal').find('#config-note').val(item.Note);
+						$('#add-config-modal').find('#config-value').val(item.Value);
+						//$('#add-config-modal').find('#config-type-dropdown').val($(this).find('a').html());
+				    	//$('#add-config-modal').find('#config-type-dropdown span:first-child').html('Type: ' + $(this).find('a').html());
+				    	//$('#add-config-modal').find('#config-type').val($(this).find('a').data('value'));
+						$('#add-config-modal').find('#config-enabled').prop('checked', item.Enabled?);
 						$('#add-config-modal').find('#config-id').val(item.Id);	
 					} else {
 		    			$('#add-config-modal').find('#add-config-modal-form')[0].reset();	
@@ -391,14 +432,15 @@ $( document ).ready(function() {
 				    	this.run('config.submit', function(){
 				    		$('#add-config-modal').modal('toggle'); 	
 				    		this.run('config.list');	
-				    	});
+				    	}.bind(this));
 				    }.bind(this)); 
 					$('#add-config-modal').find('.modal-title').html(dialog_title);	
 		    		$('#add-config-modal').modal('toggle');
 		    		return this;
 				},
 				submit: function(){
-			    	var post_data 		= $('#add-config-modal').find('#add-config-form').serializeJSON();
+			    	var post_data 		= $('#add-config-modal').find('#add-config-modal-form').serializeJSON();
+			    	post_data['config-type'] = $('#add-config-modal').find('#add-config-modal-form').find('#config-type').val();
 			    	post_data.action 	= 'config_submit';
 			    	var callback 		= (arguments[0] === undefined)? function(){}:arguments[0];
 			        return $.ajax({
@@ -413,7 +455,7 @@ $( document ).ready(function() {
 		            		if (!success) {
 		            			throw new Error(response_data.message);
 		            		}
-		            		this.notify('Config added!', 1);
+		            		this.notify('Config ' + (post_data['config-id']? 'updated':'added') + '!', 1);
 							callback.apply(this, []);
 		            	} catch (e) {
 							this.notify(e, 0);
@@ -623,8 +665,9 @@ $( document ).ready(function() {
 		    	});
 		    })
 		    $('.dropdown-menu li').on('click', function(){
-		    	$('#config-type').val($(this).find('a').html());
-		    	$('#config-type span:first-child').html('Type: ' + $(this).find('a').html());
+		    	$('#config-type-dropdown').val($(this).find('a').html());
+		    	$('#config-type-dropdown span:first-child').html('Type: ' + $(this).find('a').html());
+		    	$('#config-type').val($(this).find('a').data('value'));
 			});
 
 		    // ---------------

@@ -21,7 +21,7 @@ class Config extends BaseConfig {
 	const TYPE_BOOLEAN 	= 'boolean';	
 
 	public static function GetConfig($key) {
-		$config = ConfigQuery::create()->findOneByKey($key);
+		$config = ConfigQuery::create()->findOneByName($key);
 		if (!empty($config)) {
 			return Config::ParseValue($config);
 		}

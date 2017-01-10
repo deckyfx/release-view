@@ -97,7 +97,7 @@
                 <div class="panel panel-info">
                     <div class="panel-heading">Build List</div>
                     <div class="panel-body" style="padding: 0px;">
-                        <ul class="list-group" id="build-list"></ul>
+                        <ul class="list-group" id="build-list" style="margin-bottom: 0px;"></ul>
                     </div>
                 </div>
             </div>
@@ -108,7 +108,7 @@
                 <div class="panel panel-info">
                     <div class="panel-heading">Email List</div>
                     <div class="panel-body" style="padding: 0px;">
-                        <ul class="list-group" id="email-list"></ul>
+                        <ul class="list-group" id="email-list" style="margin-bottom: 0px;"></ul>
                     </div>
                 </div>
             </div>
@@ -119,7 +119,7 @@
                 <div class="panel panel-info">
                     <div class="panel-heading">Config List</div>
                     <div class="panel-body" style="padding: 0px;">
-                        <ul class="list-group" id="config-list"></ul>
+                        <ul class="list-group" id="config-list" style="margin-bottom: 0px;"></ul>
                     </div>
                 </div>
             </div>
@@ -264,13 +264,13 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="remove-email-modal">Remove Build</h4>
+                    <h4 class="modal-title" id="remove-email-modal">Remove Email</h4>
                 </div>
                 <div class="modal-body">
                     <form id="remove-email-modal-form">
                         <input name="remove-id" id="remove-id" type="hidden" class="form-control" placeholder="Key" aria-describedby="confirm-remove-key" >
                     </form>
-                    You cannot undo this action<br/>Remove Build <span id="remove-email-modal-text"></span>?
+                    You cannot undo this action<br/>Remove Email <span id="remove-email-modal-text"></span>?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">                        
@@ -307,26 +307,27 @@
                         <div class="input-group" style="margin-top: 10px; margin-bottom: 10px; width:100%;">
                             <label for="">Value Type</label>
                             <div class="dropdown">
-                                <button name="config-type" id="config-type" class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                <button name="config-type-dropdown" id="config-type-dropdown" class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                     <span>Type: </span>
                                     <span class="caret"></span>
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                    <li><a href="#">String</a></li>
-                                    <li><a href="#">Integer</a></li>
-                                    <li><a href="#">Double</a></li>
-                                    <li><a href="#">Boolean</a></li>
+                                    <li><a href="#" data-value="string">String</a></li>
+                                    <li><a href="#" data-value="int">Integer</a></li>
+                                    <li><a href="#" data-value="double">Double</a></li>
+                                    <li><a href="#" data-value="boolean">Boolean</a></li>
                                 </ul>
+                                <input id="config-type" name="config-type" type="hidden" value="">
                             </div>
                         </div>  
 
                         <div class="input-group">
                             <label for="">Enabled</label>
                             <br />
-                            <input type="checkbox" aria-label="..." name="config-enabled">
+                            <input type="checkbox" aria-label="..." name="config-enabled" value="true">
                         </div>                      
 
-                        <input id="build-id" name="build-id" type="hidden" value="">
+                        <input id="config-id" name="config-id" type="hidden" value="">
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -353,7 +354,7 @@
                     <form id="remove-config-modal-form">
                         <input name="remove-id" id="remove-id" type="hidden" class="form-control" placeholder="Key" aria-describedby="confirm-remove-key" >
                     </form>
-                    You cannot undo this action<br/>Remove Build <span id="remove-config-modal-text"></span>?
+                    You cannot undo this action<br/>Remove Config <span id="remove-config-modal-text"></span>?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">                        

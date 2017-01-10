@@ -77,9 +77,9 @@ class ConfigTableMap extends TableMap
     const COL_ID = 'configs.id';
 
     /**
-     * the column name for the key field
+     * the column name for the name field
      */
-    const COL_KEY = 'configs.key';
+    const COL_NAME = 'configs.name';
 
     /**
      * the column name for the value field
@@ -92,9 +92,9 @@ class ConfigTableMap extends TableMap
     const COL_TYPE = 'configs.type';
 
     /**
-     * the column name for the enable field
+     * the column name for the enabled field
      */
-    const COL_ENABLE = 'configs.enable';
+    const COL_ENABLED = 'configs.enabled';
 
     /**
      * the column name for the created_at field
@@ -118,10 +118,10 @@ class ConfigTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('Id', 'Key', 'Value', 'Type', 'Enable', 'CreatedAt', 'UpdatedAt', ),
-        self::TYPE_CAMELNAME     => array('id', 'key', 'value', 'type', 'enable', 'createdAt', 'updatedAt', ),
-        self::TYPE_COLNAME       => array(ConfigTableMap::COL_ID, ConfigTableMap::COL_KEY, ConfigTableMap::COL_VALUE, ConfigTableMap::COL_TYPE, ConfigTableMap::COL_ENABLE, ConfigTableMap::COL_CREATED_AT, ConfigTableMap::COL_UPDATED_AT, ),
-        self::TYPE_FIELDNAME     => array('id', 'key', 'value', 'type', 'enable', 'created_at', 'updated_at', ),
+        self::TYPE_PHPNAME       => array('Id', 'Name', 'Value', 'Type', 'Enabled', 'CreatedAt', 'UpdatedAt', ),
+        self::TYPE_CAMELNAME     => array('id', 'name', 'value', 'type', 'enabled', 'createdAt', 'updatedAt', ),
+        self::TYPE_COLNAME       => array(ConfigTableMap::COL_ID, ConfigTableMap::COL_NAME, ConfigTableMap::COL_VALUE, ConfigTableMap::COL_TYPE, ConfigTableMap::COL_ENABLED, ConfigTableMap::COL_CREATED_AT, ConfigTableMap::COL_UPDATED_AT, ),
+        self::TYPE_FIELDNAME     => array('id', 'name', 'value', 'type', 'enabled', 'created_at', 'updated_at', ),
         self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, )
     );
 
@@ -132,10 +132,10 @@ class ConfigTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('Id' => 0, 'Key' => 1, 'Value' => 2, 'Type' => 3, 'Enable' => 4, 'CreatedAt' => 5, 'UpdatedAt' => 6, ),
-        self::TYPE_CAMELNAME     => array('id' => 0, 'key' => 1, 'value' => 2, 'type' => 3, 'enable' => 4, 'createdAt' => 5, 'updatedAt' => 6, ),
-        self::TYPE_COLNAME       => array(ConfigTableMap::COL_ID => 0, ConfigTableMap::COL_KEY => 1, ConfigTableMap::COL_VALUE => 2, ConfigTableMap::COL_TYPE => 3, ConfigTableMap::COL_ENABLE => 4, ConfigTableMap::COL_CREATED_AT => 5, ConfigTableMap::COL_UPDATED_AT => 6, ),
-        self::TYPE_FIELDNAME     => array('id' => 0, 'key' => 1, 'value' => 2, 'type' => 3, 'enable' => 4, 'created_at' => 5, 'updated_at' => 6, ),
+        self::TYPE_PHPNAME       => array('Id' => 0, 'Name' => 1, 'Value' => 2, 'Type' => 3, 'Enabled' => 4, 'CreatedAt' => 5, 'UpdatedAt' => 6, ),
+        self::TYPE_CAMELNAME     => array('id' => 0, 'name' => 1, 'value' => 2, 'type' => 3, 'enabled' => 4, 'createdAt' => 5, 'updatedAt' => 6, ),
+        self::TYPE_COLNAME       => array(ConfigTableMap::COL_ID => 0, ConfigTableMap::COL_NAME => 1, ConfigTableMap::COL_VALUE => 2, ConfigTableMap::COL_TYPE => 3, ConfigTableMap::COL_ENABLED => 4, ConfigTableMap::COL_CREATED_AT => 5, ConfigTableMap::COL_UPDATED_AT => 6, ),
+        self::TYPE_FIELDNAME     => array('id' => 0, 'name' => 1, 'value' => 2, 'type' => 3, 'enabled' => 4, 'created_at' => 5, 'updated_at' => 6, ),
         self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, )
     );
 
@@ -157,10 +157,10 @@ class ConfigTableMap extends TableMap
         $this->setUseIdGenerator(true);
         // columns
         $this->addPrimaryKey('id', 'Id', 'INTEGER', true, null, null);
-        $this->addColumn('key', 'Key', 'VARCHAR', false, 255, '');
+        $this->addColumn('name', 'Name', 'VARCHAR', false, 255, '');
         $this->addColumn('value', 'Value', 'LONGVARCHAR', false, null, null);
         $this->addColumn('type', 'Type', 'CHAR', false, null, null);
-        $this->addColumn('enable', 'Enable', 'BOOLEAN', false, 1, null);
+        $this->addColumn('enabled', 'Enabled', 'BOOLEAN', false, 1, null);
         $this->addColumn('created_at', 'CreatedAt', 'TIMESTAMP', false, null, null);
         $this->addColumn('updated_at', 'UpdatedAt', 'TIMESTAMP', false, null, null);
     } // initialize()
@@ -327,18 +327,18 @@ class ConfigTableMap extends TableMap
     {
         if (null === $alias) {
             $criteria->addSelectColumn(ConfigTableMap::COL_ID);
-            $criteria->addSelectColumn(ConfigTableMap::COL_KEY);
+            $criteria->addSelectColumn(ConfigTableMap::COL_NAME);
             $criteria->addSelectColumn(ConfigTableMap::COL_VALUE);
             $criteria->addSelectColumn(ConfigTableMap::COL_TYPE);
-            $criteria->addSelectColumn(ConfigTableMap::COL_ENABLE);
+            $criteria->addSelectColumn(ConfigTableMap::COL_ENABLED);
             $criteria->addSelectColumn(ConfigTableMap::COL_CREATED_AT);
             $criteria->addSelectColumn(ConfigTableMap::COL_UPDATED_AT);
         } else {
             $criteria->addSelectColumn($alias . '.id');
-            $criteria->addSelectColumn($alias . '.key');
+            $criteria->addSelectColumn($alias . '.name');
             $criteria->addSelectColumn($alias . '.value');
             $criteria->addSelectColumn($alias . '.type');
-            $criteria->addSelectColumn($alias . '.enable');
+            $criteria->addSelectColumn($alias . '.enabled');
             $criteria->addSelectColumn($alias . '.created_at');
             $criteria->addSelectColumn($alias . '.updated_at');
         }
