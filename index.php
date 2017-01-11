@@ -70,13 +70,13 @@
     <nav class="navbar navbar-inverse">
         <div class="container">
             <div class="navbar-header">
-                <a class="navbar-brand" href="#"><?php echo($TITLE); ?></a>
+                <a class="navbar-brand" href="#build"><?php echo($TITLE); ?></a>
             </div>
             <div id="navbar nav nav-tabs" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav" role="tablist">
-                    <li class="active" aria-controls="builds" role="tab" data-toggle="tab" id="builds-tab-nav"><a href="#">Builds</a></li>   
-                    <li class="" aria-controls="mailinglist" role="tab" data-toggle="tab" id="mailinglist-tab-nav"><a href="#">Mailing List</a></li>   
-                    <li class="" aria-controls="preference" role="tab" data-toggle="tab" id="preference-tab-nav"><a href="#">Preferences</a></li>   
+                    <li class="active" aria-controls="builds" role="tab" data-toggle="tab" data-hashroute="build"><a href="#">Builds</a></li>   
+                    <li class="" aria-controls="mailinglist" role="tab" data-toggle="tab" data-hashroute="email"><a href="#">Mailing List</a></li>   
+                    <li class="" aria-controls="preference" role="tab" data-toggle="tab" data-hashroute="config"><a href="#">Preferences</a></li>   
                 </ul>
             </div><!--/.nav-collapse -->
         </div>
@@ -89,9 +89,8 @@
         </div>
         <!-- Tab panes -->
         <div class="tab-content" id="tab-content">
-
             <div role="tabpanel" class="tab-pane active" id="builds-tab">
-                <button type="button" class="btn btn-success " aria-label="Left Align" id="button-add-build" style="margin-bottom: 10px;">
+                <button type="button" class="btn btn-success " aria-label="Left Align" style="margin-bottom: 10px;" data-run="build.clickadd" >
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Build
                 </button>                
                 <div class="panel panel-info">
@@ -102,7 +101,7 @@
                 </div>
             </div>
             <div role="tabpanel" class="tab-pane" id="mailinglist-tab">
-                <button type="button" class="btn btn-success " aria-label="Left Align" id="button-add-email" style="margin-bottom: 10px;">
+                <button type="button" class="btn btn-success " aria-label="Left Align" style="margin-bottom: 10px;" data-run="email.clickadd" >
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Email
                 </button>                
                 <div class="panel panel-info">
@@ -113,7 +112,7 @@
                 </div>
             </div>
             <div role="tabpanel" class="tab-pane" id="preference-tab">
-                <button type="button" class="btn btn-success " aria-label="Left Align" id="button-add-config" style="margin-bottom: 10px;">
+                <button type="button" class="btn btn-success " aria-label="Left Align" style="margin-bottom: 10px;" data-run="config.clickadd">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Config
                 </button>                
                 <div class="panel panel-info">
@@ -146,7 +145,7 @@
                     <button type="button" class="btn btn-default" data-dismiss="modal">                        
                         <span class=" glyphicon glyphicon-remove" aria-hidden="true"></span> Close
                     </button>
-                    <button type="button" class="btn btn-primary" id="auth-modal-submit">
+                    <button type="button" class="btn btn-primary" data-run="authmodal">
                         <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Authorize
                     </button>
                 </div>
@@ -160,42 +159,42 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="add-build-modal-title">Add Build</h4>
+                    <h4 class="modal-title">Add Build</h4>
                 </div>
                 <div class="modal-body">
-                    <form id="add-build-modal-form">
+                    <form>
                         <div class="input-group" style="margin-top: 10px; margin-bottom: 10px;">
                             <span class="input-group-addon">Name</span>
-                            <input name="build-name" id="build-name" type="text" class="form-control" placeholder="Build Name" aria-describedby="basic-addon1">
+                            <input name="build-name" type="text" class="form-control" placeholder="Build Name" aria-describedby="basic-addon1">
                         </div>
 
                         <div class="input-group" style="margin-top: 10px; margin-bottom: 10px;">
                             <span class="input-group-addon">Version</span>
-                            <input name="build-version" id="build-version" type="text" class="form-control" placeholder="Build Version" aria-describedby="basic-addon1">
+                            <input name="build-version" type="text" class="form-control" placeholder="Build Version" aria-describedby="basic-addon1">
                         </div>
 
                         <div class="" style="margin-top: 10px; margin-bottom: 10px;">
                             <label class="control-label">Select File</label>
-                            <input id="build-file" name="build-file" type="file" multiple class="file-loading">
+                            <input name="build-file" type="file" multiple class="file-loading">
                         </div>
 
                         <div class="input-group" style="margin-top: 10px; margin-bottom: 10px;">
                             <span class="input-group-addon" >URL</span>
-                            <input name="build-url" id="build-url" type="text" class="form-control" placeholder="External URL" aria-describedby="basic-addon1">
+                            <input name="build-url" type="text" class="form-control" placeholder="External URL" aria-describedby="basic-addon1">
                         </div>
 
                         <div class="input-group" style="margin-top: 10px; margin-bottom: 10px; width:100%;">
                             <label for="exampleTextarea">Build Note</label>
-                            <textarea id="build-note" rows="3" name="build-note" class="form-control" style="width:100%;"></textarea>
+                            <textarea rows="3" name="build-note" class="form-control" style="width:100%;"></textarea>
                         </div>
-                        <input id="build-id" name="build-id" type="hidden" value="">
+                        <input name="build-id" type="hidden" value="">
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">                        
                         <span class=" glyphicon glyphicon-remove" aria-hidden="true"></span> Close
                     </button>
-                    <button type="button" class="btn btn-primary" id="add-build-modal-submit">
+                    <button type="button" class="btn btn-primary" data-run="build.submit">
                         <span class=" glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Save changes
                     </button>
                 </div>
@@ -209,19 +208,19 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="remove-build-modal">Remove Build</h4>
+                    <h4 class="modal-title">Remove Build</h4>
                 </div>
                 <div class="modal-body">
-                    <form id="remove-build-modal-form">
-                        <input name="remove-id" id="remove-id" type="hidden" class="form-control" placeholder="Key" aria-describedby="confirm-remove-key" >
+                    <form>
+                        <input name="remove-id" type="hidden" class="form-control" placeholder="Key" aria-describedby="confirm-remove-key" >
                     </form>
-                    You cannot undo this action<br/>Remove Build <span id="remove-build-modal-text"></span>?
+                    You cannot undo this action<br/>Remove Build <span></span>?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">                        
                         <span class=" glyphicon glyphicon-remove" aria-hidden="true"></span> Close
                     </button>
-                    <button type="button" class="btn btn-danger" id="remove-build-modal-submit">
+                    <button type="button" class="btn btn-danger" data-run="build.remove">
                         <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Remove
                     </button>
                 </div>
@@ -235,22 +234,22 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="add-email-modal-title">Add Email</h4>
+                    <h4 class="modal-title">Add Email</h4>
                 </div>
                 <div class="modal-body">
-                    <form id="add-email-modal-form">
+                    <form>
                         <div class="input-group" style="margin-top: 10px; margin-bottom: 10px;">
                             <span class="input-group-addon">Email</span>
                             <input name="email-name" id="email-name" type="text" class="form-control" placeholder="Email" aria-describedby="basic-addon1">
                         </div>
-                        <input id="email-id" name="email-id" type="hidden" value="">
+                        <input name="email-id" type="hidden" value="">
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">                        
                         <span class=" glyphicon glyphicon-remove" aria-hidden="true"></span> Close
                     </button>
-                    <button type="button" class="btn btn-primary" id="add-email-modal-submit">
+                    <button type="button" class="btn btn-primary" data-run="email.submit">
                         <span class=" glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Save changes
                     </button>
                 </div>
@@ -264,19 +263,19 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="remove-email-modal">Remove Email</h4>
+                    <h4 class="modal-title">Remove Email</h4>
                 </div>
                 <div class="modal-body">
-                    <form id="remove-email-modal-form">
-                        <input name="remove-id" id="remove-id" type="hidden" class="form-control" placeholder="Key" aria-describedby="confirm-remove-key" >
+                    <form>
+                        <input name="remove-id" type="hidden" class="form-control" placeholder="Key" aria-describedby="confirm-remove-key" >
                     </form>
-                    You cannot undo this action<br/>Remove Email <span id="remove-email-modal-text"></span>?
+                    You cannot undo this action<br/>Remove Email <span></span>?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">                        
                         <span class=" glyphicon glyphicon-remove" aria-hidden="true"></span> Close
                     </button>
-                    <button type="button" class="btn btn-danger" id="remove-email-modal-submit">
+                    <button type="button" class="btn btn-danger" data-run="email.remove">
                         <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Remove
                     </button>
                 </div>
@@ -290,34 +289,34 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="add-config-modal-title">Add Build</h4>
+                    <h4 class="modal-title">Add Build</h4>
                 </div>
                 <div class="modal-body">
-                    <form id="add-config-modal-form">
+                    <form>
                         <div class="input-group" style="margin-top: 10px; margin-bottom: 10px;">
                             <span class="input-group-addon">Name</span>
-                            <input name="config-name" id="config-name" type="text" class="form-control" placeholder="Config Name" aria-describedby="basic-addon1">
+                            <input name="config-name" type="text" class="form-control" placeholder="Config Name" aria-describedby="basic-addon1">
                         </div>
 
                         <div class="input-group" style="margin-top: 10px; margin-bottom: 10px;">
                             <span class="input-group-addon">Value</span>
-                            <input name="config-value" id="config-value" type="text" class="form-control" placeholder="Config Value" aria-describedby="basic-addon1">
+                            <input name="config-value" type="text" class="form-control" placeholder="Config Value" aria-describedby="basic-addon1">
                         </div>
 
                         <div class="input-group" style="margin-top: 10px; margin-bottom: 10px; width:100%;">
                             <label for="">Value Type</label>
                             <div class="dropdown">
-                                <button name="config-type-dropdown" id="config-type-dropdown" class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                <button name="config-type-dropdown" class="btn btn-default dropdown-toggle" type="button" id="config-type-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                     <span>Type: </span>
                                     <span class="caret"></span>
                                 </button>
-                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                    <li><a href="#" data-value="string">String</a></li>
-                                    <li><a href="#" data-value="int">Integer</a></li>
-                                    <li><a href="#" data-value="double">Double</a></li>
-                                    <li><a href="#" data-value="boolean">Boolean</a></li>
+                                <ul class="dropdown-menu" aria-labelledby="config-type-dropdown">
+                                    <li><a href="javascript:void(0)" data-value="string">String</a></li>
+                                    <li><a href="javascript:void(0)" data-value="int">Integer</a></li>
+                                    <li><a href="javascript:void(0)" data-value="double">Double</a></li>
+                                    <li><a href="javascript:void(0)" data-value="boolean">Boolean</a></li>
                                 </ul>
-                                <input id="config-type" name="config-type" type="hidden" value="">
+                                <input name="config-type" type="hidden" value="">
                             </div>
                         </div>  
 
@@ -327,14 +326,14 @@
                             <input type="checkbox" aria-label="..." name="config-enabled" value="true">
                         </div>                      
 
-                        <input id="config-id" name="config-id" type="hidden" value="">
+                        <input name="config-id" type="hidden" value="">
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">                        
                         <span class=" glyphicon glyphicon-remove" aria-hidden="true"></span> Close
                     </button>
-                    <button type="button" class="btn btn-primary" id="add-config-modal-submit">
+                    <button type="button" class="btn btn-primary" data-run="config.submit">
                         <span class=" glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Save changes
                     </button>
                 </div>
@@ -348,19 +347,19 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="remove-config-modal">Remove Build</h4>
+                    <h4 class="modal-title" >Remove Build</h4>
                 </div>
                 <div class="modal-body">
-                    <form id="remove-config-modal-form">
-                        <input name="remove-id" id="remove-id" type="hidden" class="form-control" placeholder="Key" aria-describedby="confirm-remove-key" >
+                    <form>
+                        <input name="remove-id" type="hidden" class="form-control" placeholder="Key" aria-describedby="confirm-remove-key" >
                     </form>
-                    You cannot undo this action<br/>Remove Config <span id="remove-config-modal-text"></span>?
+                    You cannot undo this action<br/>Remove Config <span></span>?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">                        
                         <span class=" glyphicon glyphicon-remove" aria-hidden="true"></span> Close
                     </button>
-                    <button type="button" class="btn btn-danger" id="remove-config-modal-submit">
+                    <button type="button" class="btn btn-danger" data-run="config.remove">
                         <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Remove
                     </button>
                 </div>

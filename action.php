@@ -162,6 +162,13 @@
 		        ->orderById('DESC')
 		        ->find()
 		        ->toArray();
+		    $available_configs = array();
+	        foreach ($configs as $config) {
+	         	$available_configs[]= $config['Name'];
+	        }
+	        if (!in_array('TITLE', $available_configs)) {
+	        	
+	        }
 		    $this->data['configs'] = $configs;
 		    $this->success = true;
 		}
@@ -176,7 +183,7 @@
 				$config->setEnabled($_POST['config-enabled']? 1:0);
 				$config->save();
 	    	} else {
-	    		$email = ConfigQuery::Create()->findPK($id);
+	    		$config = ConfigQuery::Create()->findPK($id);
 			    $config->setName($_POST['config-name']);
 				$config->setValue($_POST['config-value']);
 				$config->setType($_POST['config-type']);
